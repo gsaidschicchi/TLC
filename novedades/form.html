@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Formulario Novedades Calle</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 0;
+    }
+
+    #app {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+      background-color: white;
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      background-color: white;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .selected {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .alert {
+      background-color: #d1fae5;
+      border: 1px solid #10b981;
+      color: #065f46;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .nav-buttons button {
+      flex: 1;
+      padding: 10px;
+      margin: 0 4px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .back {
+      background-color: #e5e7eb;
+    }
+
+    .next {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .final {
+      background-color: #10b981;
+      color: white;
+    }
+
+    #map {
+      width: 100%;
+      height: 200px;
+      margin-top: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .location-display {
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="form-container">
+      <!-- Paso 1 -->
+      <div v-if="step === 1">
+        <h1>Reporte de Novedades</h1>
+        <h2>¿Qué desea informar?</h2>
+        <button @click="handleFirstOption" class="button">Informar elemento en calle - no encontrado en tarea</button>
+        <button @click="handleSecondOption" class="button">Informar instalación de nuevo elemento - detectado desde calle</button>
+        <button @click="handleThirdOption" class="button">Informar re-instalación por ausencia de elemento</button>
+        <button @click="handleFourthOption" class="button">Informar reemplazo por falla de elemento</button>
+        <button @click="handleFifthOption" class="button">Informar elemento dañado por terceros</button>
+      </div>
+
+      <!-- Paso 2 -->
+      <div v-if="step === 2">
+        <h2>Informar tarea a ejecutar</h2>
+
+        <div v-for="(option, index) in currentOptions" :key="index">
+          <button
+            @click="selectOption(index)"
+            :class="['button', selectedOptionIndex === index ? 'selected' : '']"
+          >
+            {{ option.label }}
+          </button>
+        </div>
+
+        <div v-if="alertMessage" class="alert">
+          {{ alertMessage }}
+        </div>
+
+        <textarea placeholder="Comentarios..."></textarea>
+
+        <div class="nav-buttons">
+          <button @click="step = 1" class="back">Volver</button>
+          <button @click="step = 3" class="next">Siguiente</button>
+        </div>
+      </div>
+
+      <!-- Paso 3 -->
+      <div v-if="step === 3">
+        <h2>Ubicación</h2>
+        <button @click="getLocation" class="button">Obtener ubicación</button>
+
+        <div class="location-display" v-if="location.lat && location.lng">
+          <p><strong>Latitud:</strong> {{ location.lat }}</p>
+          <p><strong>Longitud:</strong> {{ location.lng }}</p>
+        </div>
+
+        <div id="map"></div>
+
+        <div class="nav-buttons">
+          <button @click="step = 2" class="back">Volver</button>
+          <button class="final">Finalizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const step = ref(1);
+        const currentOptions = ref([]);
+        const selectedOptionIndex = ref(null);
+        const alertMessage = ref('');
+        const location = ref({ lat: null, lng: null });
+
+        function handleFirstOption() {
+          currentOptions.value = [
+            { label: 'Pasar linga por poste existente', alert: 'Redirigir a formulario de TLP' },
+            { label: 'Pasar Fibra por poste existente', alert: 'Redirigir a formulario de FPP' },
+            { label: 'Medición de traza de FO', alert: 'Redirigir a formulario MTR' }
+          ];
+          resetSelection();
+          step.value = 2;
+        }
+
+        function handleSecondOption() {
+          currentOptions.value = [
+            { label: 'Informar apoyo a instalar', alert: 'Redirigir a formulario IRE' }
+          ];
+          resetSelection();
+          step.value = 2;
+        }
+
+        function handleThirdOption() {
+          currentOptions.value = [
+            { label: 'Informar apoyo a instalar', alert: 'Redirigir a formulario IRE' },
+            { label: 'Informar caja H/S a instalar', alert: 'Redirigir a formulario NAS' },
+            { label: 'Informar caja NAP a instalar', alert: 'Redirigir a formulario NAP' }
+          ];
+          resetSelection();
+          step.value = 2;
+        }
+
+        function handleFourthOption() {
+          currentOptions.value = [
+            { label: 'Informar caja H/S a reemplazar', alert: 'Redirigir a formulario NAS' },
+            { label: 'Informar caja NAP a reemplazar', alert: 'Redirigir a formulario NAP' },
+            { label: 'Informar cable FC o MPO a reemplazar', alert: 'Redirigir a formulario NAS' }
+          ];
+          resetSelection();
+          step.value = 2;
+        }
+
+        function handleFifthOption() {
+          currentOptions.value = [
+            { label: 'Reemplazo daño en fibra Troncal', alert: 'Redirigir a formulario de TEF' },
+            { label: 'Reemplazo daño en fibra Subtroncal', alert: 'Redirigir a formulario de TEF' },
+            { label: 'Reemplazo daño en fibra Acceso', alert: 'Redirigir a formulario de NAS' },
+            { label: 'Reemplazo daño en cajas FOSC', alert: 'Redirigir a formulario de ENS' },
+            { label: 'Reemplazo daño en cajas NAP', alert: 'Redirigir a formulario de NAP' },
+            { label: 'Reemplazo daño en cajas Hub / Sub', alert: 'Redirigir a formulario de NAS' }
+          ];
+          resetSelection();
+          step.value = 2;
+        }
+
+        function selectOption(index) {
+          selectedOptionIndex.value = index;
+          alertMessage.value = currentOptions.value[index].alert;
+        }
+
+        function resetSelection() {
+          selectedOptionIndex.value = null;
+          alertMessage.value = '';
+        }
+
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+              location.value.lat = pos.coords.latitude.toFixed(6);
+              location.value.lng = pos.coords.longitude.toFixed(6);
+              showMap(pos.coords.latitude, pos.coords.longitude);
+            }, () => {
+              alert('No se pudo obtener la ubicación.');
+            });
+          } else {
+            alert('Tu navegador no soporta geolocalización.');
+          }
+        }
+
+        function showMap(lat, lng) {
+          const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: parseFloat(lat), lng: parseFloat(lng) },
+            zoom: 16,
+          });
+          new google.maps.Marker({ position: { lat: parseFloat(lat), lng: parseFloat(lng) }, map });
+        }
+
+        return {
+          step,
+          currentOptions,
+          selectedOptionIndex,
+          alertMessage,
+          location,
+          handleFirstOption,
+          handleSecondOption,
+          handleThirdOption,
+          handleFourthOption,
+          handleFifthOption,
+          selectOption,
+          getLocation
+        };
+      }
+    }).mount("#app");
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY"></script>
+</body>
+</html>
