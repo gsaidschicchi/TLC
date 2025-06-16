@@ -4,7 +4,7 @@
 
 ### Imagen 1: TAF (tendido de fibra por poste pasado)
 
-![Fibra óptica pasada por apoyo](./4fe7199e-fa36-4263-bcda-c48743ddac3a.png)
+![Fibra óptica pasada por apoyo](./imagen1.png)
 
 **Descripción:**  
 La fibra óptica se sujeta al poste mediante un **morseto de 1 bulón**, permitiendo su continuidad sin corte en los apoyos intermedios.
@@ -13,7 +13,7 @@ La fibra óptica se sujeta al poste mediante un **morseto de 1 bulón**, permiti
 
 ### Imagen 2: Cruce de calle
 
-![Cruce de calle con fibra óptica](./720b0192-fab6-4f08-867e-a67f591e8268.png)
+![Cruce de calle con fibra óptica](./imagen2.png)
 
 **Descripción:**  
 La fibra óptica realiza un cruce de calle utilizando **morsetos de 1 bulón** y **alambre de devanar** para asegurar el tendido y garantizar la tensión adecuada.
