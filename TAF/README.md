@@ -4,7 +4,7 @@
 
 ### Imagen 1: TAF (tendido de fibra por poste pasado)
 
-![Fibra óptica pasada por apoyo](./imagen1.png)
+![Fibra óptica pasada por apoyo](./imagen1.PNG)
 
 **Descripción:**  
 La fibra óptica se sujeta al poste mediante un **morseto de 1 bulón**, permitiendo su continuidad sin corte en los apoyos intermedios.
