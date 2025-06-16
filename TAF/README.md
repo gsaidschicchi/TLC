@@ -38,4 +38,4 @@ La fibra óptica realiza un cruce de calle utilizando **morsetos de 1 bulón** y
 
 ---
 
-**Nota:** Las cantidades indicadas corresponden a la instalación típica para cada uno de los casos mostrados. Pueden variar según condiciones del terreno, tipo de cruce y estructura del apoyo.
+**Nota:** Las cantidades indicadas corresponden a la instalación típica para cada uno de los casos mostrados. Por cada unidad de apoyo o cruce que llegue indicado desde GIS, deberá contabilizarse lo indicado en la tabla. Finalmente se realizara el "p x q + p' x q'" para obtener los materiales totales en la tarea, siendo p: la cantidad de apoyos, q: la cantidad de materiales indicados en la tabla 1, p': la cantidad de cruces de calle, q': la cantidad de materiales indicados en la tabla 2.  
