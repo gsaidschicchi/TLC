@@ -28,5 +28,6 @@ Este documento detalla los materiales requeridos para la instalación de cajas N
 | 031007 | Tirafondo 8 mm x 75mm (5/16" x 3"). Cabeza hexagonal | 5 |
 | 031126 | Etiqueta de identificación para cables de FO | 1 |
 | 034133 | Abrazaderas para sujeción de cajas de empalme 114-381 mm (21150804) | 2 |
+| 031178 | Etiqueta QR Autoadhesiva p/exterior c/UV p/Activos | 1 |
 
 ---
