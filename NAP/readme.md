@@ -29,5 +29,6 @@ Este documento detalla los materiales requeridos para la instalación de cajas N
 | 031126 | Etiqueta de identificación para cables de FO | 1 |
 | 034133 | Abrazaderas para sujeción de cajas de empalme 114-381 mm (21150804) | 2 |
 | 031178 | Etiqueta QR Autoadhesiva p/exterior c/UV p/Activos | 1 |
+| 032077 | Precinto Plástico de 7,2mm de ancho x 300mm de largo p/separador | 6 |
 
 ---
