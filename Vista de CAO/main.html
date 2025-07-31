@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificaciones CAO - Con Lingas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .plano-container {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+        }
+        
+        .manzana-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 75px 60px;
+            width: 90%;
+            height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .manzana {
+            position: relative;
+            border: 2px solid #333;
+            background-color: #fff;
+        }
+        
+        .vereda {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px dashed #999;
+        }
+        
+        .parcela {
+            position: absolute;
+            border: 1px solid #ddd;
+            background-color: rgba(240, 240, 240, 0.5);
+        }
+        
+        .poste {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: black;
+            border-radius: 50%;
+            cursor: move;
+            z-index: 10;
+            transform: translate(-50%, -50%);
+        }
+        
+        .poste.selected {
+            box-shadow: 0 0 0 3px #4CAF50;
+            transform: translate(-50%, -50%) scale(1.5);
+            z-index: 20;
+        }
+        
+        .poste.con-linga {
+            box-shadow: 0 0 0 2px #FF5722;
+        }
+        
+        .poste::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .poste-label {
+            position: absolute;
+            font-size: 10px;
+            color: #333;
+            background: rgba(255,255,255,0.9);
+            padding: 2px 4px;
+            border-radius: 3px;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 15;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .modification-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .modification-btn.cancelar {
+            background-color: #f44336;
+        }
+        
+        .modification-btn.eliminar {
+            background-color: #ff9800;
+        }
+        
+        .modification-btn.agregar {
+            background-color: #2196F3;
+        }
+        
+        .confirmation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .confirmation-checkbox {
+            margin-right: 10px;
+        }
+        
+        .manzana-selector {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        
+        .manzana-option {
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            background: #ddd;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        
+        .manzana-option.selected {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .linga {
+            position: absolute;
+            height: 2px;
+            background-color: #FF5722;
+            z-index: 5;
+            transform-origin: left center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Declarar Modificación en Tarea Realizada</h1>
+        
+        <div class="plano-container" id="plano">
+            <div class="manzana-container">
+                <!-- Manzana Superior Izquierda -->
+                <div class="manzana" id="manzana1">
+                    <div class="vereda">
+                        <!-- Postes en vereda inferior -->
+                        <div class="poste" style="top: 100%; left: 25%;" data-id="poste1"></div>
+                        <div class="poste" style="top: 100%; left: 75%;" data-id="poste2"></div>
+                        
+                        <!-- Postes en vereda lateral derecha -->
+                        <div class="poste" style="top: 50%; left: 100%;" data-id="poste3"></div>
+                        
+                        <!-- Parcelas -->
+                        <div class="parcela" style="top: 0; left: 0; width: 50%; height: 50%;"></div>
+                        <div class="parcela" style="top: 0; left: 50%; width: 50%; height: 50%;"></div>
+                        <div class="parcela" style="top: 50%; left: 0; width: 50%; height: 50%;"></div>
+                        <div class="parcela" style="top: 50%; left: 50%; width: 50%; height: 50%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Manzana Superior Derecha -->
+                <div class="manzana" id="manzana2">
+                    <div class="vereda">
+                        <!-- Postes en vereda inferior -->
+                        <div class="poste" style="top: 100%; left: 30%;" data-id="poste4"></div>
+                        <div class="poste" style="top: 100%; left: 70%;" data-id="poste5"></div>
+                        
+                        <!-- Parcelas -->
+                        <div class="parcela" style="top: 0; left: 0; width: 33%; height: 50%;"></div>
+                        <div class="parcela" style="top: 0; left: 33%; width: 34%; height: 50%;"></div>
+                        <div class="parcela" style="top: 0; left: 67%; width: 33%; height: 50%;"></div>
+                        <div class="parcela" style="top: 50%; left: 0; width: 50%; height: 50%;"></div>
+                        <div class="parcela" style="top: 50%; left: 50%; width: 50%; height: 50%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Manzana Inferior Izquierda -->
+                <div class="manzana" id="manzana3">
+                    <div class="vereda">
+                        <!-- Postes en vereda lateral derecha -->
+                        <div class="poste" style="top: 30%; left: 100%;" data-id="poste6"></div>
+                        <div class="poste" style="top: 70%; left: 100%;" data-id="poste7"></div>
+                        
+                        <!-- Parcelas -->
+                        <div class="parcela" style="top: 0; left: 0; width: 50%; height: 50%;"></div>
+                        <div class="parcela" style="top: 0; left: 50%; width: 50%; height: 50%;"></div>
+                        <div class="parcela" style="top: 50%; left: 0; width: 100%; height: 50%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Manzana Inferior Derecha -->
+                <div class="manzana" id="manzana4">
+                    <div class="vereda">
+                        <!-- Postes en vereda lateral izquierda -->
+                        <div class="poste" style="top: 30%; left: 0%;" data-id="poste8"></div>
+                        <div class="poste" style="top: 70%; left: 0%;" data-id="poste9"></div>
+                        
+                        <!-- Parcelas -->
+                        <div class="parcela" style="top: 0; left: 0; width: 100%; height: 30%;"></div>
+                        <div class="parcela" style="top: 30%; left: 0; width: 50%; height: 40%;"></div>
+                        <div class="parcela" style="top: 30%; left: 50%; width: 50%; height: 40%;"></div>
+                        <div class="parcela" style="top: 70%; left: 0; width: 100%; height: 30%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="modification-btn" id="declararModificacion">¿Desea declarar una modificación en la tarea realizada?</button>
+            <button class="modification-btn agregar" id="agregarPoste" style="display: none;">Agregar Nuevo Poste</button>
+            <button class="modification-btn eliminar" id="eliminarPoste" style="display: none;">Eliminar Poste Seleccionado</button>
+        </div>
+        
+        <div class="manzana-selector" id="manzanaSelector">
+            <span>Seleccione manzana destino:</span>
+            <span class="manzana-option" data-manzana="manzana1">Manzana 1</span>
+            <span class="manzana-option" data-manzana="manzana2">Manzana 2</span>
+            <span class="manzana-option" data-manzana="manzana3">Manzana 3</span>
+            <span class="manzana-option" data-manzana="manzana4">Manzana 4</span>
+        </div>
+        
+        <div class="confirmation-panel" id="confirmationPanel">
+            <input type="checkbox" id="confirmacion" class="confirmation-checkbox">
+            <label for="confirmacion">He realizado los cambios necesarios y confirmo el envío al área de Diseño para su revisión.</label>
+            <button class="modification-btn" id="enviarModificacion" style="margin-left: 20px;">Enviar Modificación</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const declararBtn = document.getElementById('declararModificacion');
+            const agregarBtn = document.getElementById('agregarPoste');
+            const eliminarBtn = document.getElementById('eliminarPoste');
+            const confirmationPanel = document.getElementById('confirmationPanel');
+            const enviarBtn = document.getElementById('enviarModificacion');
+            const plano = document.getElementById('plano');
+            const manzanaSelector = document.getElementById('manzanaSelector');
+            const manzanaOptions = document.querySelectorAll('.manzana-option');
+            
+            let modificacionActiva = false;
+            let posteSeleccionado = null;
+            let posteCount = 9;
+            let manzanaDestino = 'manzana1';
+            const lingas = {};
+            
+            // Inicializar postes existentes
+            let postes = Array.from(document.querySelectorAll('.poste'));
+            inicializarPostes(postes);
+            crearLingas();
+            
+            // Configurar selector de manzana
+            manzanaOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    manzanaOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    manzanaDestino = this.getAttribute('data-manzana');
+                });
+            });
+            
+            // Seleccionar primera manzana por defecto
+            manzanaOptions[0].classList.add('selected');
+            
+            // Botón para declarar modificación
+            declararBtn.addEventListener('click', function() {
+                modificacionActiva = !modificacionActiva;
+                
+                if (modificacionActiva) {
+                    this.textContent = 'Cancelar Modificación';
+                    this.classList.add('cancelar');
+                    confirmationPanel.style.display = 'block';
+                    agregarBtn.style.display = 'inline-block';
+                    eliminarBtn.style.display = 'inline-block';
+                    manzanaSelector.style.display = 'block';
+                    
+                    postes.forEach(poste => {
+                        poste.style.cursor = 'move';
+                    });
+                } else {
+                    this.textContent = '¿Desea declarar una modificación en la tarea realizada?';
+                    this.classList.remove('cancelar');
+                    confirmationPanel.style.display = 'none';
+                    agregarBtn.style.display = 'none';
+                    eliminarBtn.style.display = 'none';
+                    manzanaSelector.style.display = 'none';
+                    
+                    if (posteSeleccionado) {
+                        posteSeleccionado.classList.remove('selected');
+                        posteSeleccionado = null;
+                    }
+                }
+            });
+            
+            // Botón para agregar nuevo poste
+            agregarBtn.addEventListener('click', function() {
+                if (!modificacionActiva) return;
+                
+                const manzana = document.getElementById(manzanaDestino);
+                const vereda = manzana.querySelector('.vereda');
+                
+                posteCount++;
+                const nuevoPoste = document.createElement('div');
+                nuevoPoste.className = 'poste';
+                nuevoPoste.setAttribute('data-id', 'poste' + posteCount);
+                nuevoPoste.setAttribute('data-accion', 'agregado');
+                nuevoPoste.style.top = '50%';
+                nuevoPoste.style.left = '50%';
+                
+                vereda.appendChild(nuevoPoste);
+                
+                inicializarPostes([nuevoPoste]);
+                
+                if (posteSeleccionado) {
+                    posteSeleccionado.classList.remove('selected');
+                }
+                nuevoPoste.classList.add('selected');
+                posteSeleccionado = nuevoPoste;
+                
+                agregarEtiqueta(nuevoPoste, 'P' + posteCount);
+                crearLingas();
+            });
+            
+            // Botón para eliminar poste seleccionado
+            eliminarBtn.addEventListener('click', function() {
+                if (!modificacionActiva || !posteSeleccionado) {
+                    alert('Por favor, seleccione un poste para eliminar.');
+                    return;
+                }
+                
+                if (confirm('¿Está seguro que desea eliminar este poste?')) {
+                    // Eliminar lingas conectadas
+                    Object.entries(lingas).forEach(([id, {poste1, poste2, elemento}]) => {
+                        if (poste1 === posteSeleccionado || poste2 === posteSeleccionado) {
+                            elemento.remove();
+                            delete lingas[id];
+                            
+                            // Quitar clase con-linga del otro poste
+                            const otroPoste = poste1 === posteSeleccionado ? poste2 : poste1;
+                            otroPoste.classList.remove('con-linga');
+                        }
+                    });
+                    
+                    // Eliminar etiqueta
+                    const label = posteSeleccionado.nextElementSibling;
+                    if (label && label.classList.contains('poste-label')) {
+                        label.remove();
+                    }
+                    
+                    // Eliminar poste
+                    posteSeleccionado.remove();
+                    posteSeleccionado = null;
+                    
+                    // Actualizar lista de postes
+                    postes = Array.from(document.querySelectorAll('.poste'));
+                }
+            });
+            
+            // Enviar modificación
+            enviarBtn.addEventListener('click', function() {
+                if (document.getElementById('confirmacion').checked) {
+                    const postesActuales = Array.from(document.querySelectorAll('.poste'));
+                    const modificaciones = postesActuales.map(poste => ({
+                        id: poste.getAttribute('data-id'),
+                        top: poste.style.top,
+                        left: poste.style.left,
+                        manzana: poste.closest('.manzana').id,
+                        accion: poste.getAttribute('data-accion') || 'modificado'
+                    }));
+                    
+                    console.log('Modificaciones enviadas:', modificaciones);
+                    alert('Modificación enviada al área de Diseño para su revisión.');
+                    
+                    modificacionActiva = false;
+                    declararBtn.textContent = '¿Desea declarar una modificación en la tarea realizada?';
+                    declararBtn.classList.remove('cancelar');
+                    confirmationPanel.style.display = 'none';
+                    agregarBtn.style.display = 'none';
+                    eliminarBtn.style.display = 'none';
+                    manzanaSelector.style.display = 'none';
+                    document.getElementById('confirmacion').checked = false;
+                    
+                    if (posteSeleccionado) {
+                        posteSeleccionado.classList.remove('selected');
+                        posteSeleccionado = null;
+                    }
+                } else {
+                    alert('Por favor, confirme que ha revisado los cambios antes de enviar.');
+                }
+            });
+            
+            // Función para crear lingas entre postes alineados
+            function crearLingas() {
+                // Eliminar lingas existentes
+                document.querySelectorAll('.linga').forEach(linga => linga.remove());
+                Object.keys(lingas).forEach(key => delete lingas[key]);
+                
+                // Quitar clase con-linga de todos los postes
+                document.querySelectorAll('.poste').forEach(poste => {
+                    poste.classList.remove('con-linga');
+                });
+                
+                // Agrupar postes por posición
+                const postesPorPosicion = {
+                    inferior: [...document.querySelectorAll('[style*="top: 100%"]')],
+                    superior: [...document.querySelectorAll('[style*="top: 0%"]')],
+                    izquierda: [...document.querySelectorAll('[style*="left: 0%"]')],
+                    derecha: [...document.querySelectorAll('[style*="left: 100%"]')]
+                };
+                
+                // Conectar postes en la misma fila (inferior/superior)
+                conectarPostesEnFila(postesPorPosicion.inferior, 'horizontal');
+                conectarPostesEnFila(postesPorPosicion.superior, 'horizontal');
+                
+                // Conectar postes en la misma columna (izquierda/derecha)
+                conectarPostesEnFila(postesPorPosicion.izquierda, 'vertical');
+                conectarPostesEnFila(postesPorPosicion.derecha, 'vertical');
+            }
+            
+            function conectarPostesEnFila(postes, direccion) {
+                if (postes.length < 2) return;
+                
+                // Ordenar postes según dirección
+                postes.sort((a, b) => {
+                    return direccion === 'horizontal' 
+                        ? parseFloat(a.style.left) - parseFloat(b.style.left)
+                        : parseFloat(a.style.top) - parseFloat(b.style.top);
+                });
+                
+                // Conectar postes consecutivos en diferentes manzanas
+                for (let i = 0; i < postes.length - 1; i++) {
+                    const poste1 = postes[i];
+                    const poste2 = postes[i + 1];
+                    
+                    if (poste1.closest('.manzana') !== poste2.closest('.manzana')) {
+                        const idLinga = `linga-${poste1.dataset.id}-${poste2.dataset.id}`;
+                        
+                        const linga = document.createElement('div');
+                        linga.className = 'linga';
+                        linga.id = idLinga;
+                        plano.appendChild(linga);
+                        
+                        actualizarLinga(poste1, poste2, linga, direccion);
+                        
+                        poste1.classList.add('con-linga');
+                        poste2.classList.add('con-linga');
+                        
+                        lingas[idLinga] = { poste1, poste2, elemento: linga, direccion };
+                    }
+                }
+            }
+            
+            function actualizarLinga(poste1, poste2, linga, direccion) {
+                const rect1 = poste1.getBoundingClientRect();
+                const rect2 = poste2.getBoundingClientRect();
+                const planoRect = plano.getBoundingClientRect();
+                
+                if (direccion === 'horizontal') {
+                    const x1 = rect1.left - planoRect.left + rect1.width / 2;
+                    const x2 = rect2.left - planoRect.left + rect2.width / 2;
+                    const y = rect1.top - planoRect.top + rect1.height / 2;
+                    
+                    linga.style.width = `${x2 - x1}px`;
+                    linga.style.left = `${x1}px`;
+                    linga.style.top = `${y}px`;
+                } else {
+                    const y1 = rect1.top - planoRect.top + rect1.height / 2;
+                    const y2 = rect2.top - planoRect.top + rect2.height / 2;
+                    const x = rect1.left - planoRect.left + rect1.width / 2;
+                    
+                    linga.style.width = `${y2 - y1}px`;
+                    linga.style.left = `${x}px`;
+                    linga.style.top = `${y1}px`;
+                    linga.style.transform = 'rotate(90deg)';
+                }
+            }
+            
+            // Función para inicializar postes
+            function inicializarPostes(postesArray) {
+                postesArray.forEach((poste) => {
+                    if (!poste.nextElementSibling || !poste.nextElementSibling.classList.contains('poste-label')) {
+                        const labelText = 'P' + poste.getAttribute('data-id').replace('poste', '');
+                        agregarEtiqueta(poste, labelText);
+                    }
+                    
+                    poste.addEventListener('click', function(e) {
+                        if (!modificacionActiva) return;
+                        e.stopPropagation();
+                        
+                        if (posteSeleccionado === this) {
+                            this.classList.remove('selected');
+                            posteSeleccionado = null;
+                        } else {
+                            if (posteSeleccionado) {
+                                posteSeleccionado.classList.remove('selected');
+                            }
+                            this.classList.add('selected');
+                            posteSeleccionado = this;
+                        }
+                    });
+                    
+                    poste.addEventListener('mousedown', iniciarArrastre);
+                });
+            }
+            
+            // Función para agregar etiqueta a poste
+            function agregarEtiqueta(poste, texto) {
+                const label = document.createElement('div');
+                label.className = 'poste-label';
+                label.textContent = texto;
+                
+                const left = poste.style.left;
+                const top = poste.style.top;
+                
+                if (left === '100%') {
+                    label.style.left = 'calc(100% + 5px)';
+                    label.style.top = top;
+                } else if (left === '0%') {
+                    label.style.left = '-25px';
+                    label.style.top = top;
+                } else if (top === '100%') {
+                    label.style.left = left;
+                    label.style.top = 'calc(100% + 5px)';
+                } else {
+                    label.style.left = left;
+                    label.style.top = `calc(${top} - 15px)`;
+                }
+                
+                poste.parentNode.insertBefore(label, poste.nextSibling);
+            }
+            
+            // Funciones para arrastrar postes
+            function iniciarArrastre(e) {
+                if (!modificacionActiva) return;
+                e.stopPropagation();
+                e.preventDefault();
+                
+                const poste = e.target;
+                const label = poste.nextElementSibling;
+                const manzana = poste.closest('.manzana');
+                const manzanaRect = manzana.getBoundingClientRect();
+                
+                if (posteSeleccionado !== poste) {
+                    if (posteSeleccionado) {
+                        posteSeleccionado.classList.remove('selected');
+                    }
+                    poste.classList.add('selected');
+                    posteSeleccionado = poste;
+                }
+                
+                const startX = e.clientX;
+                const startY = e.clientY;
+                
+                const posteLeft = parseFloat(poste.style.left);
+                const posteTop = parseFloat(poste.style.top);
+                
+                function moverPoste(e) {
+                    const dx = e.clientX - startX;
+                    const dy = e.clientY - startY;
+                    
+                    const percentX = dx / manzanaRect.width * 100;
+                    const percentY = dy / manzanaRect.height * 100;
+                    
+                    let newLeft = posteLeft + percentX;
+                    let newTop = posteTop + percentY;
+                    
+                    newLeft = Math.max(0, Math.min(newLeft, 100));
+                    newTop = Math.max(0, Math.min(newTop, 100));
+                    
+                    poste.style.left = `${newLeft}%`;
+                    poste.style.top = `${newTop}%`;
+                    
+                    if (label) {
+                        if (newLeft === 0) {
+                            label.style.left = '-25px';
+                            label.style.top = `${newTop}%`;
+                        } else if (newLeft === 100) {
+                            label.style.left = 'calc(100% + 5px)';
+                            label.style.top = `${newTop}%`;
+                        } else if (newTop === 100) {
+                            label.style.left = `${newLeft}%`;
+                            label.style.top = 'calc(100% + 5px)';
+                        } else {
+                            label.style.left = `${newLeft}%`;
+                            label.style.top = `calc(${newTop}% - 15px)`;
+                        }
+                    }
+                    
+                    // Actualizar lingas conectadas
+                    Object.values(lingas).forEach(({poste1, poste2, elemento, direccion}) => {
+                        if (poste1 === poste || poste2 === poste) {
+                            actualizarLinga(poste1, poste2, elemento, direccion);
+                        }
+                    });
+                    
+                    poste.setAttribute('data-accion', 'modificado');
+                }
+                
+                function soltarPoste() {
+                    document.removeEventListener('mousemove', moverPoste);
+                    document.removeEventListener('mouseup', soltarPoste);
+                }
+                
+                document.addEventListener('mousemove', moverPoste);
+                document.addEventListener('mouseup', soltarPoste);
+            }
+            
+            // Click en el plano para deseleccionar
+            plano.addEventListener('click', function() {
+                if (modificacionActiva && posteSeleccionado) {
+                    posteSeleccionado.classList.remove('selected');
+                    posteSeleccionado = null;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
