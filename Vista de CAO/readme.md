@@ -26,6 +26,8 @@ De esta forma solicitaríamos las modificaciones al finalizar el plano.
 
 ## 🧭 Caso de uso: Modificación de tarea para impactar en CAO
 
+![Criterios de Diseño](criterios_Diseño.PNG)
+
 ### 1. Vías posibles de modificación del proyecto
 
 **a. Rediseño por fuera de lo permitido por Diseño**
