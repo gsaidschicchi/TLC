@@ -30,15 +30,17 @@ De esta forma solicitaríamos las modificaciones al finalizar el plano.
 
 ### 1. Vías posibles de modificación del proyecto
 
-**a. Rediseño por fuera de lo permitido por Diseño**
+![Vias de modificacion](modificacion_CAO.PNG)
+
+**a. Se solicita Rediseño de plano: los cambios a realizar no se encuentran dentro de los permitidos por Diseño**
 
 - Se requiere rediseño por parte del área de Diseño.
 - Se crea una nueva tarea que reemplaza a la anterior.
-- No se modifica la tarea original, y por lo tanto **no se informa ninguna modificación sobre esta**.
+- No se modifica la tarea original (ya que fue modificada en el rediseño del plano), y por lo tanto **no se informa ninguna modificación sobre esta**.
 
-**b. Modificaciones dentro de lo permitido por Diseño**
+**b. Diseño permite la modificación: el supervisor autoriza el cambio a la EC**
 
-- Se modifica tanto el proyecto como la tarea ya creada.
+- Se modifica tanto el proyecto como la tarea ya creada y despachada a la EC.
 - **Debe reflejarse en el CAO.**
 
 En este documento nos enfocamos en el caso **b**, donde **los cambios deben ser informados a Diseño** para actualizar el inventario de red.
