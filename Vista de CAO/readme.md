@@ -1,43 +1,105 @@
-# 🛠️ Caso de uso para confección de CAO por modificación de tarea
+# 🛠️ Confección de CAO por Modificación de Tarea
 
-## 1. Introducción
+## Introducción
 
-Se pueden producir modificaciones de un proyecto por dos vías:
+Actualmente el sistema está preparado para tratar el CAO de un plano como un conjunto de tareas.  
+Algunas de ellas con modificaciones a impactar y otras ejecutadas de acuerdo al proyecto.  
 
-### a. Rediseño por fuera de lo permitido por Diseño
-Los cambios **no se encuentran dentro de los permitidos por Diseño**, por lo que es **necesario un rediseño**.  
-Al solicitar el rediseño del proyecto, los cambios solicitados y posteriormente realizados por Diseño impactarán en **una nueva tarea**, **no siendo necesario modificar la tarea original creada**.  
-En este caso **no se informarán modificaciones sobre la tarea existente**.
+La alternativa a esto es usar la tarea interna existente para **adjuntar un plano modificado en PDF**.  
+De esta forma solicitaríamos las modificaciones al finalizar el plano.
 
-### b. Modificaciones dentro de lo permitido por Diseño
-Los cambios realizados **se encuentran dentro de los permitidos por Diseño**, modificando tanto el proyecto como la **tarea ya creada**.  
-Estos cambios **sí deben reflejarse en el CAO**.
+### ✅ Ventajas
+
+- Es sencillo de interpretar por Diseño ya que no modifica la forma actual de trabajo.
+- Ahorra tiempo en el corto plazo.
+
+### ❌ Desventajas
+
+- No aprovecha la estructura del sistema.
+- No permite identificar elementos a cambiar, perdiendo trazabilidad.
+- No permite un proceso de mejora continua.
+- No permite el posterior automatismo para actualización automática de CAO en `.dwg`.
 
 ---
 
-## 2. Compleción de tarea por la contratista
+## 🧭 Caso de uso: Modificación de tarea para impactar en CAO
 
-La **empresa contratista (EC)** completa la tarea correspondiente en **MOICA PÚBLICO**.
+### 1. Vías posibles de modificación del proyecto
+
+**a. Rediseño por fuera de lo permitido por Diseño**
+
+- Se requiere rediseño por parte del área de Diseño.
+- Se crea una nueva tarea que reemplaza a la anterior.
+- No se modifica la tarea original, y por lo tanto **no se informa ninguna modificación sobre esta**.
+
+**b. Modificaciones dentro de lo permitido por Diseño**
+
+- Se modifica tanto el proyecto como la tarea ya creada.
+- **Debe reflejarse en el CAO.**
+
+En este documento nos enfocamos en el caso **b**, donde **los cambios deben ser informados a Diseño** para actualizar el inventario de red.
 
 ---
 
-## 3. Supervisión de Obras
+## ❓ Preguntas
 
-Una vez completada, la tarea pasa a una etapa de **Supervisión de Obras**, donde el supervisor revisará la información cargada por la EC.
+### 1. ¿Vamos a tratar el CAO como un conjunto de tareas?
 
-### En esta etapa:
-- Se presentará una opción en la vista de la tarea para:
+---
 
-#### a. Indicar que se realizó una modificación que debe impactarse en el diseño original
-- Al clickear este **checkbox**, se podrá **filtrar** posteriormente aquellas tareas que deben ser **editadas por Diseño**.
+### 2. ¿Cómo llega una tarea al estado de Supervisión donde se puede impactar la modificación?
 
-#### b. Segunda parte de aprobación
-- Se mostrará el **plano existente** en MOICA Público junto con la **tarea a realizar**.
-- El supervisor podrá:
-  - **Editar el plano**: mover apoyos, cajas, fibras, lingas o cualquier elemento seleccionado.
-  - Alternativamente, si el cambio es complejo:
-    - Dibujar sobre el plano de la tarea para indicar las modificaciones.
-    - Adjuntar un archivo (por ejemplo, **PDF**) con las modificaciones descriptas.
+- La empresa contratista (EC) completa la tarea en **MOICA Público**.
+- Esto permite que la tarea pase a la instancia de **Supervisión de Obras**.
 
-> 📝 Esta funcionalidad respeta la modalidad tradicional con la que el área de Obras informa a Diseño los cambios que deben impactar en un proyecto.
+---
+
+### 3. ¿Cómo se identifica que una tarea requiere impactar un cambio en el diseño?
+
+**Estado actual:**  
+- El supervisor comenta en un campo de observaciones al revisar la tarea.
+- El GIS muestra una tabla filtrable con elementos con comentarios.
+- La información que llega **no es fácilmente interpretable**, lo que puede provocar errores en el inventario.
+
+**Propuesta de mejora:**  
+- Agregar al final del formulario de supervisión un **checkbox**:
+  > “¿Desea notificar un cambio a impactar en el plano final de obras?”
+
+- Si se activa el checkbox:
+  - Se identifica la tarea.
+  - Se permite filtrar por Proyecto.
+  - Se agrupan los elementos a modificar en el plano.
+
+---
+
+## ✏️ Edición de tareas en supervisión
+
+### Opción 1: Edición sobre plano
+
+- Mostrar el plano actual desde MOICA Público.
+- Permitir editar elementos del plano (apoyos, cajas, fibras, lingas, etc.).
+
+### Opción 2: Dibujar sobre el plano
+
+- Permitir marcar manualmente las modificaciones sobre la imagen del plano.
+
+### Opción 3: Adjuntar archivo
+
+- Subir un archivo PDF con las modificaciones descriptas.
+
+> ✅ Esta opción respeta la modalidad tradicional de comunicación entre Obras y Diseño.
+
+---
+
+## 🧩 Preguntas adicionales
+
+**A. ¿Quién debe alertar del cambio respecto al diseño?**
+
+- **Supervisor:** Mayor control y menos errores, pero más carga operativa.
+- **Contratista:** A futuro, podría agilizar el proceso si se implementa bien.
+
+> 💬 *Opinión personal:*  
+> En el **corto plazo**, que lo informe el supervisor.  
+> En el **largo plazo**, se puede delegar a la EC con mejor usabilidad.
+
 
