@@ -8,6 +8,8 @@ Algunas de ellas con modificaciones a impactar y otras ejecutadas de acuerdo al 
 La alternativa a esto es usar la tarea interna existente para **adjuntar un plano modificado en PDF**.  
 De esta forma solicitaríamos las modificaciones al finalizar el plano.
 
+![Flujo de modificación de CAO](flujo_CAO.PNG)
+
 ### ✅ Ventajas
 
 - Es sencillo de interpretar por Diseño ya que no modifica la forma actual de trabajo.
