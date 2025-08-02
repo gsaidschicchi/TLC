@@ -2,15 +2,15 @@
 
 ## Introducción
 
-Actualmente el sistema está preparado para tratar el CAO de un plano como un conjunto de tareas.  
-Algunas de ellas con modificaciones a impactar y otras ejecutadas de acuerdo al proyecto.  
+Actualmente el sistema interpreta un plano como un conjunto de tareas de campo.
+Algunas de ellas con modificaciones a impactar en el plano final de obra y otras ejecutadas de acuerdo al proyecto, las cuales no generan variaciones sobre el diseño de obra.  
 
-La alternativa a esto es usar la tarea interna existente para **adjuntar un plano modificado en PDF**.  
-De esta forma solicitaríamos las modificaciones al finalizar el plano.
+La alternativa a esta forma de interpretar el plano, es usar la tarea interna existente para **adjuntar un plano modificado en PDF**.  
+De esta forma solicitaríamos las modificaciones a impactar en el CAO al finalizar la construcción de la obra, trabajando sobre el plano como un "todo" y no como una sumatoria de tareas de campo que al unirlas conforman el proyecto ejecutado.
 
 ![Flujo de modificación de CAO](flujo_CAO.PNG)
 
-### ✅ Ventajas
+### ✅ Ventajas de trabajar el plano ejecutado como un "todo"
 
 - Es sencillo de interpretar por Diseño ya que no modifica la forma actual de trabajo.
 - Ahorra tiempo en el corto plazo.
