@@ -97,6 +97,15 @@ En este documento nos enfocamos en el caso **b**, donde **los cambios deben ser 
 
 ---
 
+## 👀 Vistas para diseño
+
+### Desarrollo complementario para agilidad en actualización de CAO 
+
+- Informar a Diseño cuando el proyecto se encuentre terminado.
+- Permitir agrupar todas las modificaciones identificadas en el checkbox ✅ por proyecto.
+
+---
+
 ## 🧩 Preguntas adicionales
 
 **A. ¿Quién debe alertar del cambio respecto al diseño?**
