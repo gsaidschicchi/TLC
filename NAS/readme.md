@@ -26,7 +26,26 @@ Permite la supervisión de obras remota y da trazabilidad a la construcción de 
 
 ---
 
+## 🧱 MATERIALES
 
+Esta parte del documento detalla los materiales requeridos para la instalación de cajas NAS, organizados por categorías.
+
+---
+
+### 1. Puesta a tierra
+
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 031044 | Jabalina para puesta a tierra de 1/2" | 1 |
+| 031092 | Alambre de cobre para PAT por Kg. | 1 |
+| 032037 | Tomacable bronceado para jabalina de 1/2" | 1 |
+| 032047 | Cubrejabalina | 1 |
+| 031011 | Clavo U para jabalina | 12 |
+| 031019 | Prensacable de acero de 1/4 para jabalina/linga | 2 |
+| 033042 | Hebilla de acero inoxidable AISI 304 para fleje 033041 | 3 |
+| 033041 | Fleje de acero inoxidable AISI 304 | 3 |
+
+---
 
 
 
