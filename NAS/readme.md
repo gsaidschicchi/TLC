@@ -47,5 +47,36 @@ Esta parte del documento detalla los materiales requeridos para la instalación 
 
 ---
 
+### 2. Cajas CDO / CTO
 
+Permite seleccionar entre alguna de estas dos opciones (HUB o SUB)
+
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 034129 | Caja Distribución Óptica CDO - SP 1x8 - 1 Ent MPO Female 6FO 12 Sal SC/APC 1FO | 1 |
+| 034130 | Caja de empalme HUAWEI FTTH SUB 1+8 14260682 | 1 |
+
+---
+
+### 3. Cables de interconexión entre cajas
+
+Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables disponibles.
+
+**3.a. Caja HUB**
+
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 030058 | Cable distribucion 6FO 50 m. Un extremo preconectorizado MPO. (14136997) | 1 |
+| 030055 | Cable distribucion 6FO 100 m. Un extremo preconectorizado MPO. (14136997-004) | 1 |
+| 030056 | Cable distribucion 6FO 150 m. Un extremo preconectorizado MPO. (14136997-005) | 1 |
+| 030057 | Cable distribucion 6FO 200 m. Un extremo preconectorizado MPO. (14136997-006) | 1 |
+
+**3.b. Caja SUB**
+
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 030067 | Cable interconexion ADSS 1FO 50 m/5 mm. Fastconnect SC/APC. (14137733-001) | 1 |
+| 030068 | Cable interconexion ADSS 1FO 100 m/5 mm. Fastconnect SC/APC. (14137733-003) | 1 |
+| 030069 | Cable interconexion ADSS 1FO 150 m/5 mm. Fastconnect SC/APC. (14137733-004) | 1 |
+| 030070 | Cable interconexion ADSS 1FO 200 m/5 mm. Fastconnect SC/APC. (14137733-009) | 1 |
 
