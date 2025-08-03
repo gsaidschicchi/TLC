@@ -85,6 +85,6 @@ Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables 
 | 030070 | Cable interconexion ADSS 1FO 200 m/5 mm. Fastconnect SC/APC. (14137733-009) | 1 |
 
 ❓ **Preguntas:**
-¿Se sujeta con abrazadera de cajas o con fleje y hebillas?
-¿Cuantos precintos consume para las ganancias en las puntas?
-¿Hay algún materiales que **NO** estoy contemplando?
+¿Se sujeta con abrazadera de cajas o con fleje y hebillas?  
+¿Cuantos precintos consume para las ganancias en las puntas?  
+¿Hay algún materiales que **NO** estoy contemplando?  
