@@ -84,6 +84,25 @@ Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables 
 | 030069 | Cable interconexion ADSS 1FO 150 m/5 mm. Fastconnect SC/APC. (14137733-004) | 1 |
 | 030070 | Cable interconexion ADSS 1FO 200 m/5 mm. Fastconnect SC/APC. (14137733-009) | 1 |
 
+---
+
+### 4. Alambre de devanar
+
+El alambre de devanar es variable en función de la longitud del cable. Al tratarse de cables preconectorizados con longitudes estándar, puede resumirse en la siguiente tabla:  
+
+| Longitud de cable | Cantidad de alambre |
+| --- | --- |
+| 50 metros | 0.7 kg |
+| 100 metros | 1.4 kg |
+| 150 metros | 2.1 kg |
+| 200 metros | 2.8 kg |  
+
+*Los kg de alambre usados surgen de la siguiente función: `alambre = longitud del cable × 0.014`*    
+
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 031064 | Alambre de devanar forrado por kg. | *ver tabla* |
+
 ❓ **Preguntas:**  
 ¿Las cajas se sujetan con abrazadera con cremallera (simil NAP) o con fleje y hebillas?  
 ¿Cuantos precintos consume para las ganancias en las puntas?  
