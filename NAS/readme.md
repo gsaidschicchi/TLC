@@ -70,6 +70,10 @@ Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables 
 | 030055 | Cable distribucion 6FO 100 m. Un extremo preconectorizado MPO. (14136997-004) | 1 |
 | 030056 | Cable distribucion 6FO 150 m. Un extremo preconectorizado MPO. (14136997-005) | 1 |
 | 030057 | Cable distribucion 6FO 200 m. Un extremo preconectorizado MPO. (14136997-006) | 1 |
+| 0xxxxx | Cable distribucion 12FO 50 m. Un extremo preconectorizado MPO | 1 |
+| 030115 | Cable distribucion 12FO 100 m. Un extremo preconectorizado MPO | 1 |
+| 030104 | Cable distribucion 12FO 150 m. Un extremo preconectorizado MPO | 1 |
+| 030116 | Cable distribucion 12FO 200 m. Un extremo preconectorizado MPO | 1 |
 
 **3.b. Caja SUB**
 
@@ -80,3 +84,7 @@ Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables 
 | 030069 | Cable interconexion ADSS 1FO 150 m/5 mm. Fastconnect SC/APC. (14137733-004) | 1 |
 | 030070 | Cable interconexion ADSS 1FO 200 m/5 mm. Fastconnect SC/APC. (14137733-009) | 1 |
 
+❓ **Preguntas:**
+¿Se sujeta con abrazadera de cajas o con fleje y hebillas?
+¿Cuantos precintos consume para las ganancias en las puntas?
+¿Hay algún materiales que **NO** estoy contemplando?
