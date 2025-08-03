@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario NAS - Instalación y medición de cajas Hub y Sub</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      padding: 20px; 
+      max-width: 800px; 
+      margin: 0 auto; 
+    }
+    .paso { 
+      display: none; 
+      padding: 20px; 
+      border: 1px solid #ddd; 
+      border-radius: 5px; 
+      background: #f9f9f9; 
+      margin-bottom: 20px;
+    }
+    .paso.activo { 
+      display: block; 
+      animation: fade 0.3s ease-in; 
+    }
+    @keyframes fade { 
+      from { opacity: 0; } 
+      to { opacity: 1; } 
+    }
+    .botonera { 
+      margin-top: 20px; 
+      display: flex; 
+      justify-content: space-between; 
+    }
+    button { 
+      padding: 10px 15px; 
+      margin: 5px; 
+      cursor: pointer; 
+      border: none; 
+      background: #007bff; 
+      color: white; 
+      border-radius: 4px; 
+      font-size: 16px;
+    }
+    button:hover { 
+      background-color: #0056b3; 
+    }
+    button:disabled { 
+      background-color: #cccccc; 
+      cursor: not-allowed; 
+    }
+    .hidden { 
+      display: none; 
+    }
+    h3, h4, h5 { 
+      margin-top: 0; 
+      color: #333;
+    }
+    .seccion { 
+      border: 1px solid #ccc; 
+      padding: 15px; 
+      border-radius: 5px; 
+      margin-bottom: 15px;
+      background: white;
+    }
+    .progress-bar {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      position: relative;
+      color: #666;
+    }
+    .progress-step.active {
+      color: #007bff;
+      font-weight: bold;
+    }
+    .progress-step.completed {
+      color: #28a745;
+    }
+    .progress-step:not(:last-child):after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      background: #ddd;
+      z-index: -1;
+    }
+    .progress-step.completed:not(:last-child):after {
+      background: #28a745;
+    }
+    .error { 
+      color: #dc3545; 
+      font-size: 14px; 
+      margin-top: 5px;
+    }
+    .preview-img {
+      max-width: 200px;
+      max-height: 150px;
+      margin-top: 10px;
+      display: block;
+    }
+    #resumen p {
+      margin: 5px 0;
+      padding: 5px;
+      background: #f0f0f0;
+      border-radius: 3px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Formulario NAS - Instalación y medición de cajas Hub y Sub</h2>
+
+<div class="progress-bar">
+  <div class="progress-step active" id="step-1">1. Ubicación</div>
+  <div class="progress-step" id="step-2">2. Instalación</div>
+  <div class="progress-step" id="step-3">3. Materiales</div>
+  <div class="progress-step" id="step-4">4. Resumen</div>
+</div>
+
+<div class="paso activo" id="paso-1">
+  <h3>Paso 1: Activar ubicación</h3>
+  <div class="seccion">
+    <p><strong>Debe posicionar la caja en el apoyo de red al momento de escanear el QR</strong></p>
+    <button onclick="getUbicacion()">Activar ubicación</button>
+    <p id="ubicacion">Ubicación: no disponible</p>
+    <p id="error-ubicacion" class="error hidden">Debe activar la ubicación para continuar</p>
+  </div>
+  <div class="botonera">
+    <button disabled>Anterior</button>
+    <button onclick="validarPaso1()">Siguiente</button>
+  </div>
+</div>
+
+<div class="paso" id="paso-2">
+  <h3>Paso 2: Instalación y medición de cajas Hub y Sub</h3>
+
+  <div class="seccion">
+    <h4>Zona Técnica</h4>
+    <label>Indique la zona técnica: 
+      <input type="text" id="zonaTecnica" required>
+      <span id="error-zona" class="error hidden">Este campo es obligatorio</span>
+    </label>
+    <br><label>Identificación de la caja: 
+      <input type="text" id="idCaja" required>
+      <span id="error-id" class="error hidden">Este campo es obligatorio</span>
+    </label>
+  </div>
+
+  <div class="seccion">
+    <h4>Tipo de Caja</h4>
+    <button onclick="seleccionarTipo('HUB')">HUB</button>
+    <button onclick="seleccionarTipo('SUB')">SUB</button>
+    <div id="tipoCajaSeleccionado" style="margin-top:10px;"></div>
+    <div id="seleccionCable" style="margin-top:10px;"></div>
+    <span id="error-tipo" class="error hidden">Debe seleccionar un tipo de caja</span>
+  </div>
+
+  <div class="seccion">
+    <h4>¿Se colocó puesta a tierra?</h4>
+    <button onclick="toggleTierra(true)">Sí</button>
+    <button onclick="toggleTierra(false)">No</button>
+    <div id="tierraFoto" class="hidden" style="margin-top:10px;" data-tierra="no">
+      <label>Adjuntar foto de puesta a tierra: 
+        <input type="file" id="fotoTierra" accept="image/*" onchange="previewImage(this, 'previewTierra')">
+        <img id="previewTierra" class="preview-img hidden">
+      </label>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <h4>Foto Potencia óptica 1490nm / PON ID</h4>
+    <label>Adjuntar foto: 
+      <input type="file" id="fotoPotencia" accept="image/*" required onchange="previewImage(this, 'previewPotencia')">
+      <img id="previewPotencia" class="preview-img hidden">
+      <span id="error-potencia" class="error hidden">Debe adjuntar esta foto</span>
+    </label>
+  </div>
+
+  <div class="seccion">
+    <h4>Foto caja HUB / SUB panorámica</h4>
+    <label>Adjuntar foto: 
+      <input type="file" id="fotoPanoramica" accept="image/*" required onchange="previewImage(this, 'previewPanoramica')">
+      <img id="previewPanoramica" class="preview-img hidden">
+      <span id="error-panoramica" class="error hidden">Debe adjuntar esta foto</span>
+    </label>
+  </div>
+
+  <div class="botonera">
+    <button onclick="anteriorPaso()">Anterior</button>
+    <button onclick="validarPaso2()">Siguiente</button>
+  </div>
+</div>
+
+<div class="paso" id="paso-3">
+  <h3>Paso 3: Precarga de materiales</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Descripción</th>
+        <th>Unidad</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody id="tablaMateriales"></tbody>
+  </table>
+  <div class="botonera">
+    <button onclick="anteriorPaso()">Anterior</button>
+    <button onclick="siguientePaso()">Siguiente</button>
+  </div>
+</div>
+
+<div class="paso" id="paso-4">
+  <h3>Paso 4: Resumen y envío</h3>
+  <div class="seccion">
+    <h4>Resumen de la instalación</h4>
+    <div id="resumen"></div>
+  </div>
+  <div class="seccion">
+    <h4>Fotos adjuntas</h4>
+    <div id="resumenFotos" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
+  </div>
+  <div class="botonera">
+    <button onclick="anteriorPaso()">Anterior</button>
+    <button onclick="enviarFormulario()" style="background-color: #28a745;">Enviar formulario</button>
+  </div>
+</div>
+
+<script>
+// Variables globales
+let pasoActual = 1;
+let formData = {
+  ubicacion: null,
+  zonaTecnica: '',
+  idCaja: '',
+  tipoCaja: null,
+  cableSeleccionado: null,
+  tieneTierra: false,
+  fotos: {
+    tierra: null,
+    potencia: null,
+    panoramica: null
+  },
+  materiales: []
+};
+
+const longitudes = { "50": 50, "100": 100, "150": 150, "200": 200 };
+
+// Funciones principales
+function mostrarPaso(n) {
+  // Actualizar barra de progreso
+  document.querySelectorAll('.progress-step').forEach((step, i) => {
+    step.classList.remove('active', 'completed');
+    if (i + 1 === n) {
+      step.classList.add('active');
+    } else if (i + 1 < n) {
+      step.classList.add('completed');
+    }
+  });
+  
+  // Mostrar paso correspondiente
+  document.querySelectorAll('.paso').forEach((div, i) => {
+    div.classList.toggle('activo', i === n - 1);
+  });
+  
+  pasoActual = n;
+  
+  // Precargar materiales cuando se muestra el paso 3
+  if (pasoActual === 3) {
+    cargarMateriales();
+  }
+  
+  // Generar resumen cuando se muestra el paso 4
+  if (pasoActual === 4) {
+    generarResumen();
+  }
+}
+
+function siguientePaso() {
+  if (pasoActual < 4) mostrarPaso(pasoActual + 1);
+  if (pasoActual === 3) generarResumen();
+}
+
+function anteriorPaso() {
+  if (pasoActual > 1) mostrarPaso(pasoActual - 1);
+}
+
+// Funciones de validación
+function validarPaso1() {
+  if (!formData.ubicacion) {
+    document.getElementById('error-ubicacion').classList.remove('hidden');
+    return;
+  }
+  document.getElementById('error-ubicacion').classList.add('hidden');
+  siguientePaso();
+}
+
+function validarPaso2() {
+  let valido = true;
+  
+  // Validar campos obligatorios
+  formData.zonaTecnica = document.getElementById('zonaTecnica').value;
+  formData.idCaja = document.getElementById('idCaja').value;
+  
+  if (!formData.zonaTecnica) {
+    document.getElementById('error-zona').classList.remove('hidden');
+    valido = false;
+  } else {
+    document.getElementById('error-zona').classList.add('hidden');
+  }
+  
+  if (!formData.idCaja) {
+    document.getElementById('error-id').classList.remove('hidden');
+    valido = false;
+  } else {
+    document.getElementById('error-id').classList.add('hidden');
+  }
+  
+  if (!formData.tipoCaja) {
+    document.getElementById('error-tipo').classList.remove('hidden');
+    valido = false;
+  } else {
+    document.getElementById('error-tipo').classList.add('hidden');
+  }
+  
+  const fotoPotencia = document.getElementById('fotoPotencia').files[0];
+  if (!fotoPotencia) {
+    document.getElementById('error-potencia').classList.remove('hidden');
+    valido = false;
+  } else {
+    formData.fotos.potencia = fotoPotencia;
+    document.getElementById('error-potencia').classList.add('hidden');
+  }
+  
+  const fotoPanoramica = document.getElementById('fotoPanoramica').files[0];
+  if (!fotoPanoramica) {
+    document.getElementById('error-panoramica').classList.remove('hidden');
+    valido = false;
+  } else {
+    formData.fotos.panoramica = fotoPanoramica;
+    document.getElementById('error-panoramica').classList.add('hidden');
+  }
+  
+  if (valido) {
+    siguientePaso();
+  }
+}
+
+// Funciones de datos
+function getUbicacion() {
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude.toFixed(5);
+      const lon = pos.coords.longitude.toFixed(5);
+      formData.ubicacion = { lat, lon };
+      document.getElementById("ubicacion").innerText = `Ubicación: Lat ${lat}, Lon ${lon}`;
+    },
+    err => {
+      alert("No se pudo obtener la ubicación. Error: " + err.message);
+      formData.ubicacion = null;
+    }
+  );
+}
+
+function seleccionarTipo(tipo) {
+  formData.tipoCaja = tipo;
+  document.getElementById("tipoCajaSeleccionado").innerHTML = `<strong>Tipo seleccionado:</strong> ${tipo}`;
+  
+  const cables = tipo === 'HUB' ? [
+    'Cable distribucion 6FO 50 m.',
+    'Cable distribucion 6FO 100 m.',
+    'Cable distribucion 6FO 150 m.',
+    'Cable distribucion 6FO 200 m.'
+  ] : [
+    'Cable interconexion ADSS 1FO 50m/5 mm.',
+    'Cable interconexion ADSS 1FO 100m/5 mm.',
+    'Cable interconexion ADSS 1FO 150m/5 mm.',
+    'Cable interconexion ADSS 1FO 200m/5 mm.'
+  ];
+  
+  let html = '<label><strong>Seleccione el cable:</strong><select id="selectCable" onchange="formData.cableSeleccionado = this.value" class="form-control">';
+  html += '<option value="">Seleccione...</option>';
+  cables.forEach(c => html += `<option value="${c}">${c}</option>`);
+  html += '</select></label>';
+  
+  document.getElementById("seleccionCable").innerHTML = html;
+}
+
+function toggleTierra(si) {
+  formData.tieneTierra = si;
+  const tierraDiv = document.getElementById("tierraFoto");
+  tierraDiv.classList.toggle("hidden", !si);
+  tierraDiv.dataset.tierra = si ? 'si' : 'no';
+  
+  if (si) {
+    document.getElementById('fotoTierra').required = true;
+  } else {
+    formData.fotos.tierra = null;
+    document.getElementById('previewTierra').classList.add('hidden');
+    document.getElementById('fotoTierra').required = false;
+  }
+}
+
+function previewImage(input, previewId) {
+  const preview = document.getElementById(previewId);
+  const file = input.files[0];
+  
+  if (file) {
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      preview.classList.remove('hidden');
+      
+      // Guardar referencia al archivo
+      if (previewId === 'previewTierra') formData.fotos.tierra = file;
+      else if (previewId === 'previewPotencia') formData.fotos.potencia = file;
+      else if (previewId === 'previewPanoramica') formData.fotos.panoramica = file;
+    }
+    
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = '';
+    preview.classList.add('hidden');
+  }
+}
+
+function cargarMateriales() {
+  const tabla = document.getElementById("tablaMateriales");
+  tabla.innerHTML = "";
+  formData.materiales = [];
+
+  if (!formData.tipoCaja) {
+    tabla.innerHTML = "<tr><td colspan='4'>No se ha seleccionado tipo de caja</td></tr>";
+    return;
+  }
+
+  if (formData.tipoCaja === "HUB") {
+    formData.materiales.push(["034129", "Caja Distribución Óptica CDO - SP 1x8 - 1 Ent MPO Female 6FO 12 Sal SC/APC 1FO", "u", 1]);
+    
+    if (formData.cableSeleccionado) {
+      if (formData.cableSeleccionado.includes("50")) formData.materiales.push(["030058", formData.cableSeleccionado, "u", 1]);
+      else if (formData.cableSeleccionado.includes("100")) formData.materiales.push(["030055", formData.cableSeleccionado, "u", 1]);
+      else if (formData.cableSeleccionado.includes("150")) formData.materiales.push(["030056", formData.cableSeleccionado, "u", 1]);
+      else if (formData.cableSeleccionado.includes("200")) formData.materiales.push(["030057", formData.cableSeleccionado, "u", 1]);
+    }
+  }
+  
+  if (formData.tipoCaja === "SUB") {
+    formData.materiales.push(["034130", "Caja de empalme HUAWEI FTTH SUB 1+8 14260682", "u", 1]);
+    
+    if (formData.cableSeleccionado) {
+      if (formData.cableSeleccionado.includes("50")) formData.materiales.push(["030067", formData.cableSeleccionado, "u", 1]);
+      else if (formData.cableSeleccionado.includes("100")) formData.materiales.push(["030068", formData.cableSeleccionado, "u", 1]);
+      else if (formData.cableSeleccionado.includes("150")) formData.materiales.push(["030069", formData.cableSeleccionado, "u", 1]);
+      else if (formData.cableSeleccionado.includes("200")) formData.materiales.push(["030070", formData.cableSeleccionado, "u", 1]);
+    }
+  }
+
+  if (formData.cableSeleccionado) {
+    let longitudClave = Object.keys(longitudes).find(l => formData.cableSeleccionado.includes(l));
+    if (longitudClave) {
+      let metros = longitudes[longitudClave];
+      let peso = (metros * 0.014).toFixed(1);
+      formData.materiales.push(["031064", "Alambre de devanar forrado por kg.", "kg", peso]);
+    }
+  }
+
+  if (formData.tieneTierra) {
+    formData.materiales.push(["031044", "Jabalina para puesta a tierra de 1/2\"", "u", 1]);
+    formData.materiales.push(["031092", "Alambre de cobre para PAT por Kg.", "u", 1]);
+    formData.materiales.push(["032037", "Tomacable bronceado para jabalina de 1/2\"", "u", 1]);
+    formData.materiales.push(["032047", "Cubrejabalina", "u", 1]);
+    formData.materiales.push(["031011", "Clavo U para jabalina", "u", 12]);
+    formData.materiales.push(["031019", "Prensacable de acero de 1/4 para jabalina/linga", "u", 2]);
+    formData.materiales.push(["033042", "Hebilla de acero inoxidable AISI 304 para fleje 033041", "u", 3]);
+    formData.materiales.push(["033041", "Fleje de acero inoxidable AISI 304", "u", 3]);
+  }
+
+  if (formData.materiales.length === 0) {
+    tabla.innerHTML = "<tr><td colspan='4'>No se han seleccionado materiales</td></tr>";
+    return;
+  }
+
+  formData.materiales.forEach(m => {
+    let row = document.createElement("tr");
+    m.forEach(d => {
+      let td = document.createElement("td");
+      td.textContent = d;
+      row.appendChild(td);
+    });
+    tabla.appendChild(row);
+  });
+}
+
+function generarResumen() {
+  const resumen = document.getElementById('resumen');
+  resumen.innerHTML = '';
+  
+  // Datos básicos
+  resumen.innerHTML += `
+    <p><strong>Zona técnica:</strong> ${formData.zonaTecnica}</p>
+    <p><strong>ID Caja:</strong> ${formData.idCaja}</p>
+    <p><strong>Tipo de caja:</strong> ${formData.tipoCaja}</p>
+    <p><strong>Cable seleccionado:</strong> ${formData.cableSeleccionado}</p>
+    <p><strong>Puesta a tierra:</strong> ${formData.tieneTierra ? 'Sí' : 'No'}</p>
+    <p><strong>Ubicación:</strong> Lat ${formData.ubicacion.lat}, Lon ${formData.ubicacion.lon}</p>
+  `;
+  
+  // Materiales
+  resumen.innerHTML += '<p><strong>Materiales requeridos:</strong></p><ul>';
+  formData.materiales.forEach(m => {
+    resumen.innerHTML += `<li>${m[1]} (${m[3]} ${m[2]})</li>`;
+  });
+  resumen.innerHTML += '</ul>';
+  
+  // Fotos (solo previews)
+  const resumenFotos = document.getElementById('resumenFotos');
+  resumenFotos.innerHTML = '';
+  
+  if (formData.fotos.potencia) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      resumenFotos.innerHTML += `
+        <div>
+          <p><strong>Foto Potencia:</strong></p>
+          <img src="${e.target.result}" class="preview-img">
+        </div>
+      `;
+    };
+    reader.readAsDataURL(formData.fotos.potencia);
+  }
+  
+  if (formData.fotos.panoramica) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      resumenFotos.innerHTML += `
+        <div>
+          <p><strong>Foto Panorámica:</strong></p>
+          <img src="${e.target.result}" class="preview-img">
+        </div>
+      `;
+    };
+    reader.readAsDataURL(formData.fotos.panoramica);
+  }
+  
+  if (formData.tieneTierra && formData.fotos.tierra) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      resumenFotos.innerHTML += `
+        <div>
+          <p><strong>Foto Tierra:</strong></p>
+          <img src="${e.target.result}" class="preview-img">
+        </div>
+      `;
+    };
+    reader.readAsDataURL(formData.fotos.tierra);
+  }
+}
+
+function enviarFormulario() {
+  // Aquí iría la lógica para enviar los datos al servidor
+  console.log('Datos a enviar:', formData);
+  
+  // Simulación de envío
+  alert('Formulario enviado correctamente. Gracias por completar la instalación.');
+  
+  // Resetear formulario
+  setTimeout(() => {
+    location.reload();
+  }, 2000);
+}
+</script>
+
+</body>
+</html>
