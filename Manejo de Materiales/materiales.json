@@ -1,0 +1,110 @@
+{
+  "IRE": {
+    "Instalación de Poste de madera": [
+      { "codigo": "010004", "descripcion": "Poste de madera de 9 metros", "unidad": "u", "cantidad": 1 },
+      { "codigo": "010002", "descripcion": "Poste de madera de 7,5 metros", "unidad": "u", "cantidad": 1 },
+      { "codigo": "010007", "descripcion": "Poste de madera de 11 metros", "unidad": "u", "cantidad": 1 },
+      { "codigo": "010006", "descripcion": "Poste de madera de 14 metros", "unidad": "u", "cantidad": 1 }
+    ]
+  },
+  "TLC": {
+    "Rienda a muerto en poste de madera": [
+      { "codigo": "010014", "descripcion": "Aislador nuez de porcelana", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031002", "descripcion": "Ancla doble hélice", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031003", "descripcion": "Chapa de amarre protectora de poste", "unidad": "u", "cantidad": 2 },
+      { "codigo": "031004", "descripcion": "Guardarrienda dielectrica con traba", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031007", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 2 },
+      { "codigo": "031048", "descripcion": "Grampa J", "unidad": "u", "cantidad": 2 },
+      { "codigo": "031054", "descripcion": "Linga de acero de 6mm forrada", "unidad": "m", "cantidad": 13.5 },
+      { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 6 },
+      { "codigo": "033046", "descripcion": "Clavo de acero de cabeza plana", "unidad": "u", "cantidad": 8 }
+    ],
+    "Rienda a pique en poste de madera": [
+      { "codigo": "010014", "descripcion": "Aislador nuez de porcelana", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031002", "descripcion": "Ancla doble hélice", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031003", "descripcion": "Chapa de amarre protectora de poste", "unidad": "u", "cantidad": 2 },
+      { "codigo": "031007", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 5 },
+      { "codigo": "031048", "descripcion": "Grampa J", "unidad": "u", "cantidad": 2 },
+      { "codigo": "031054", "descripcion": "Linga de acero de 6mm forrada", "unidad": "m", "cantidad": 13.5 },
+      { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 6 },
+      { "codigo": "033046", "descripcion": "Clavo de acero de cabeza plana", "unidad": "u", "cantidad": 8 },
+      { "codigo": "031006", "descripcion": "Brazo extensión para rienda a pique chico", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031072", "descripcion": "Bulon de 300x16mm cabeza cuadrada con tuerca cuadrada, para brazo de extensión", "unidad": "u", "cantidad": 1 }
+    ],
+    "Amarre en poste de madera": [
+      { "codigo": "031048", "descripcion": "Grampa J", "unidad": "u", "cantidad": 2 },
+      { "codigo": "031007", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 2 },
+      { "codigo": "031003", "descripcion": "Chapa de amarre protectora de poste", "unidad": "u", "cantidad": 2 },
+      { "codigo": "033046", "descripcion": "Clavo de acero de cabeza plana", "unidad": "u", "cantidad": 8 },
+      { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 2 }
+    ],
+    "Linga por poste pasante de madera": [
+      { "codigo": "031017", "descripcion": "Abrazadera 140 mm", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031043", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 2 }
+    ]
+  },
+  "TLP": {
+      "Rienda a muerto en poste de madera": [
+          { "codigo": "010014", "descripcion": "Aislador nuez de porcelana", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031002", "descripcion": "Ancla doble hélice", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031003", "descripcion": "Chapa de amarre protectora de poste", "unidad": "u", "cantidad": 2 },
+          { "codigo": "031004", "descripcion": "Guardarrienda dielectrica con traba", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031007", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 2 },
+          { "codigo": "031048", "descripcion": "Grampa J", "unidad": "u", "cantidad": 2 },
+          { "codigo": "031054", "descripcion": "Linga de acero de 6mm forrada", "unidad": "m", "cantidad": 13.5 },
+          { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 6 },
+          { "codigo": "033046", "descripcion": "Clavo de acero de cabeza plana", "unidad": "u", "cantidad": 8 }
+        ],
+        "Rienda a pique en poste de madera": [
+          { "codigo": "010014", "descripcion": "Aislador nuez de porcelana", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031002", "descripcion": "Ancla doble hélice", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031003", "descripcion": "Chapa de amarre protectora de poste", "unidad": "u", "cantidad": 2 },
+          { "codigo": "031007", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 5 },
+          { "codigo": "031048", "descripcion": "Grampa J", "unidad": "u", "cantidad": 2 },
+          { "codigo": "031054", "descripcion": "Linga de acero de 6mm forrada", "unidad": "m", "cantidad": 13.5 },
+          { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 6 },
+          { "codigo": "033046", "descripcion": "Clavo de acero de cabeza plana", "unidad": "u", "cantidad": 8 },
+          { "codigo": "031006", "descripcion": "Brazo extensión para rienda a pique chico", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031072", "descripcion": "Bulon de 300x16mm cabeza cuadrada con tuerca cuadrada, para brazo de extensión", "unidad": "u", "cantidad": 1 }
+        ],
+        "Amarre en poste de madera": [
+          { "codigo": "031048", "descripcion": "Grampa J", "unidad": "u", "cantidad": 2 },
+          { "codigo": "031007", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 2 },
+          { "codigo": "031003", "descripcion": "Chapa de amarre protectora de poste", "unidad": "u", "cantidad": 2 },
+          { "codigo": "033046", "descripcion": "Clavo de acero de cabeza plana", "unidad": "u", "cantidad": 8 },
+          { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 2 }
+        ],
+        "Linga por poste pasante de madera": [
+          { "codigo": "031017", "descripcion": "Abrazadera 140 mm", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031043", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 1 },
+          { "codigo": "031068", "descripcion": "Morseto de 3 bulones pesado", "unidad": "u", "cantidad": 2 }
+        ]
+  },
+  "NAP": {
+    "Instalación de caja NAP en poste de madera": [
+      { "codigo": "034128", "descripcion": "Caja NAP 144 Emp 6 SP 14 INOUT 5/12mm Oval 8/16mm", "unidad": "u", "cantidad": 1 },
+      { "codigo": "045178", "descripcion": "Splitter optico 1:8 sin conectorizar 0.25mm/1.5m (45200073)", "unidad": "u", "cantidad": 6 },
+      { "codigo": "034080", "descripcion": "Manguitos protectores p/ FO", "unidad": "u", "cantidad": 60 },
+      { "codigo": "033131", "descripcion": "Cruz de ganancia para FO de 600mm", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031007", "descripcion": "Tirafondo 8 mm x 75mm", "unidad": "u", "cantidad": 5 },
+      { "codigo": "031126", "descripcion": "Etiqueta de identificación para cables de FO", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031178", "descripcion": "Etiqueta QR autohadesiva p/exterior c/UV p/Activos", "unidad": "u", "cantidad": 1 },
+      { "codigo": "034133", "descripcion": "Abrazaderas para sujeccion de cajas de empalme 114-381 mm.(21150804)", "unidad": "u", "cantidad": 2 }
+    ],
+    "Colocación de Puesta a tierra en poste de madera": [
+      { "codigo": "031044", "descripcion": "Jabalina para puesta a tierra de 1/2\"", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031092", "descripcion": "Alambre de cobre para PAT por Kg.", "unidad": "kg", "cantidad": 1 },
+      { "codigo": "032037", "descripcion": "Tomacable bronceado para jabalina de 1/2\"", "unidad": "u", "cantidad": 1 },
+      { "codigo": "032047", "descripcion": "Cubrejabalina", "unidad": "u", "cantidad": 1 },
+      { "codigo": "031011", "descripcion": "Clavo U para jabalina", "unidad": "u", "cantidad": 12 },
+      { "codigo": "031019", "descripcion": "Prensacable de acero de 1/4 para jabalina/linga", "unidad": "u", "cantidad": 2 },
+      { "codigo": "033042", "descripcion": "Hebilla de acero inoxidable AISI 304 para fleje 033041", "unidad": "u", "cantidad": 3 },
+      { "codigo": "033041", "descripcion": "Fleje de acero inoxidable AISI 304", "unidad": "u", "cantidad": 3 }
+    ]
+  },
+  "NAS": {
+    "Instalación de caja Hub en apoyo": [],
+    "Instalación de caja Sub en apoyo": []
+  }
+}
