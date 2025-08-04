@@ -49,9 +49,12 @@ Esta parte del documento detalla los materiales requeridos para la instalación 
 
 ### 2. Cajas CDO / CTO
 
+Todas las cajas consumen el estandar de una etiqueta sea Hub o Sub y su correspondiente abrazadera.
+
 | Artículo | Descripción | Cantidad |
 | --- | --- | --- |
 | 031178 | Etiqueta QR Autoadhesiva p/exterior c/UV p/Activos |	1 |
+| 034133 | Abrazaderas para sujeccion de cajas de empalme 114-381 mm. (21150804) | 1 |
 
 Permite seleccionar entre alguna de estas dos opciones (HUB o SUB)
 
@@ -78,6 +81,7 @@ Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables 
 | 030115 | Cable distribucion 12FO 100 m. Un extremo preconectorizado MPO | 1 |
 | 030104 | Cable distribucion 12FO 150 m. Un extremo preconectorizado MPO | 1 |
 | 030116 | Cable distribucion 12FO 200 m. Un extremo preconectorizado MPO | 1 |
+| 030098 | Cable MPO de 12FO 300 m | 1 |
 
 **3.b. Caja SUB**
 
@@ -87,6 +91,7 @@ Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables 
 | 030068 | Cable interconexion ADSS 1FO 100 m/5 mm. Fastconnect SC/APC. (14137733-003) | 1 |
 | 030069 | Cable interconexion ADSS 1FO 150 m/5 mm. Fastconnect SC/APC. (14137733-004) | 1 |
 | 030070 | Cable interconexion ADSS 1FO 200 m/5 mm. Fastconnect SC/APC. (14137733-009) | 1 |
+| 030105 | Cable interconexion adss 1FO 300 m/5 mm. fastconnect sc/apc | 1 |
 
 ---
 
@@ -107,6 +112,25 @@ El alambre de devanar es variable en función de la longitud del cable. Al trata
 | --- | --- | --- |
 | 031064 | Alambre de devanar forrado por kg. | *ver tabla* |
 
+---
+
+### 5. Precintos
+
+Dependiendo de la selección de la caja (HUB o SUB), se utilizarán distintas cantidades de precintos plásticos.
+
+**3.a. Caja HUB**
+
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 032077 | Precinto Plástico de 7,2mm de ancho x 300mm de largo p/separador 032076 | 4 |
+
+**3.a. Caja SUB**
+
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 032077 | Precinto Plástico de 7,2mm de ancho x 300mm de largo p/separador 032076 | 8 |
+
+ 
 ❓ **Preguntas:**  
 ¿Las cajas se sujetan con abrazadera con cremallera (simil NAP) o con fleje y hebillas?  
 ¿Cuantos precintos consume para las ganancias en las puntas?  
