@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manejo de Materiales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h2 {
+      margin-top: 30px;
+    }
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    input[type="text"] {
+      padding: 6px;
+      margin: 5px 0;
+      width: 200px;
+    }
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+ 
+  <h1>Manejo de Materiales</h1>
+ 
+  <div class="section">
+    <h2>Tipificaciones</h2>
+    <div id="tipificaciones"></div>
+ 
+    <h3>Agregar nueva tipificación</h3>
+    <input type="text" id="nuevaTipificacionInput" placeholder="Nueva tipificación"/>
+    <button onclick="agregarTipificacion()">Agregar Tipificación</button>
+  </div>
+ 
+  <div class="section">
+    <h2>Subtareas</h2>
+    <div id="subtareas"></div>
+ 
+    <h3>Agregar nueva subtarea</h3>
+    <input type="text" id="nuevaSubtareaInput" placeholder="Nueva subtarea"/>
+    <button onclick="agregarSubtarea()">Agregar Subtarea</button>
+  </div>
+ 
+  <div class="section">
+    <h2>Materiales Asociados</h2>
+    <table id="tablaMateriales">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Materiales se cargarán aquí -->
+      </tbody>
+    </table>
+    <div class="section">
+        <h3>Agregar elemento a estándar</h3>
+        <input type="text" id="nuevoCodigo" placeholder="Código"/>
+        <input type="text" id="nuevaDescripcion" placeholder="Descripción"/>
+        <input type="text" id="nuevaUnidad" placeholder="Unidad"/>
+        <input type="number" id="nuevaCantidad" placeholder="Cantidad"/>
+        <button onclick="agregarMaterial()">Agregar Material</button>
+      </div>
+  </div>
+ 
+  <script>
+    let materialesData = {};
+    let tipificacionSeleccionada = null;
+    let subtareaSeleccionada = null;
+ 
+    async function cargarMateriales() {
+      try {
+        const response = await fetch('materiales.json');
+        materialesData = await response.json();
+        mostrarTipificaciones();
+      } catch (error) {
+        console.error('Error al cargar materiales.json:', error);
+      }
+    }
+ 
+    function mostrarTipificaciones() {
+      const container = document.getElementById('tipificaciones');
+      container.innerHTML = '';
+ 
+      for (let tipificacion in materialesData) {
+        const btn = document.createElement('button');
+        btn.textContent = tipificacion;
+        btn.onclick = () => seleccionarTipificacion(tipificacion);
+        container.appendChild(btn);
+      }
+    }
+ 
+    function seleccionarTipificacion(tipificacion) {
+      tipificacionSeleccionada = tipificacion;
+      subtareaSeleccionada = null;
+      mostrarSubtareas();
+      limpiarTablaMateriales();
+    }
+ 
+    function agregarTipificacion() {
+      const input = document.getElementById('nuevaTipificacionInput');
+      const nueva = input.value.trim();
+      if (nueva && !materialesData[nueva]) {
+        materialesData[nueva] = {};
+        mostrarTipificaciones();
+        input.value = '';
+      }
+    }
+ 
+    function mostrarSubtareas() {
+      const container = document.getElementById('subtareas');
+      container.innerHTML = '';
+ 
+      if (tipificacionSeleccionada) {
+        const subtareas = materialesData[tipificacionSeleccionada];
+        for (let subtarea in subtareas) {
+          const btn = document.createElement('button');
+          btn.textContent = subtarea;
+          btn.onclick = () => seleccionarSubtarea(subtarea);
+          container.appendChild(btn);
+        }
+      }
+    }
+ 
+    function seleccionarSubtarea(subtarea) {
+      subtareaSeleccionada = subtarea;
+      mostrarMateriales();
+    }
+ 
+    function agregarSubtarea() {
+      const input = document.getElementById('nuevaSubtareaInput');
+      const nueva = input.value.trim();
+      if (nueva && tipificacionSeleccionada && !materialesData[tipificacionSeleccionada][nueva]) {
+        materialesData[tipificacionSeleccionada][nueva] = [];
+        mostrarSubtareas();
+        input.value = '';
+      }
+    }
+ 
+    function mostrarMateriales() {
+      const tbody = document.getElementById('tablaMateriales').getElementsByTagName('tbody')[0];
+      tbody.innerHTML = '';
+ 
+      if (tipificacionSeleccionada && subtareaSeleccionada) {
+        const materiales = materialesData[tipificacionSeleccionada][subtareaSeleccionada];
+        materiales.forEach((mat, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${mat.codigo}</td>
+            <td>${mat.descripcion}</td>
+            <td>${mat.unidad}</td>
+            <td>${mat.cantidad}</td>
+            <td><button onclick="eliminarMaterial(${index})">x</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+    }
+ 
+    function eliminarMaterial(index) {
+      if (tipificacionSeleccionada && subtareaSeleccionada) {
+        materialesData[tipificacionSeleccionada][subtareaSeleccionada].splice(index, 1);
+        mostrarMateriales();
+      }
+    }
+ 
+    function limpiarTablaMateriales() {
+      const tbody = document.getElementById('tablaMateriales').getElementsByTagName('tbody')[0];
+      tbody.innerHTML = '';
+    }
+ 
+    function agregarMaterial() {
+      const codigo = document.getElementById('nuevoCodigo').value.trim();
+      const descripcion = document.getElementById('nuevaDescripcion').value.trim();
+      const unidad = document.getElementById('nuevaUnidad').value.trim();
+      const cantidad = parseFloat(document.getElementById('nuevaCantidad').value);
+ 
+      if (codigo && descripcion && unidad && !isNaN(cantidad) && tipificacionSeleccionada && subtareaSeleccionada) {
+        const nuevoMaterial = { codigo, descripcion, unidad, cantidad };
+        materialesData[tipificacionSeleccionada][subtareaSeleccionada].push(nuevoMaterial);
+        mostrarMateriales();
+ 
+        // Limpiar campos
+        document.getElementById('nuevoCodigo').value = '';
+        document.getElementById('nuevaDescripcion').value = '';
+        document.getElementById('nuevaUnidad').value = '';
+        document.getElementById('nuevaCantidad').value = '';
+      }
+    }
+ 
+    // Inicializar cargando materiales.json
+    cargarMateriales();
+  </script>
+ 
+ 
+ 
+</body>
+</html>
