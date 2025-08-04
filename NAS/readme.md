@@ -49,6 +49,10 @@ Esta parte del documento detalla los materiales requeridos para la instalación 
 
 ### 2. Cajas CDO / CTO
 
+| Artículo | Descripción | Cantidad |
+| --- | --- | --- |
+| 031178 | Etiqueta QR Autoadhesiva p/exterior c/UV p/Activos |	1 |
+
 Permite seleccionar entre alguna de estas dos opciones (HUB o SUB)
 
 | Artículo | Descripción | Cantidad |
