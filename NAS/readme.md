@@ -132,6 +132,6 @@ Dependiendo de la selección de la caja (HUB o SUB), se utilizarán distintas ca
 
  
 ❓ **Preguntas:**  
-¿Las cajas se sujetan con abrazadera con cremallera (simil NAP) o con fleje y hebillas? Rta: Abrazadera de caja Huawei 
-¿Cuantos precintos consume para las ganancias en las puntas? Rta: Puede consumir 4 u 8
-¿Hay algún materiales que **NO** estoy contemplando? Rta: creo que no
+¿Las cajas se sujetan con abrazadera con cremallera (simil NAP) o con fleje y hebillas? Rta: Abrazadera de caja Huawei  
+¿Cuantos precintos consume para las ganancias en las puntas? Rta: Puede consumir 4 u 8  
+¿Hay algún materiales que **NO** estoy contemplando? Rta: creo que no  
