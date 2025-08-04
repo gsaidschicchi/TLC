@@ -77,7 +77,7 @@ Dependiendo de la selección de la caja (HUB o SUB), se presentarán los cables 
 | 030055 | Cable distribucion 6FO 100 m. Un extremo preconectorizado MPO. (14136997-004) | 1 |
 | 030056 | Cable distribucion 6FO 150 m. Un extremo preconectorizado MPO. (14136997-005) | 1 |
 | 030057 | Cable distribucion 6FO 200 m. Un extremo preconectorizado MPO. (14136997-006) | 1 |
-| 0xxxxx | Cable distribucion 12FO 50 m. Un extremo preconectorizado MPO | 1 |
+| 030114 | Cable distribucion 12FO 50 m. Un extremo preconectorizado MPO | 1 |
 | 030115 | Cable distribucion 12FO 100 m. Un extremo preconectorizado MPO | 1 |
 | 030104 | Cable distribucion 12FO 150 m. Un extremo preconectorizado MPO | 1 |
 | 030116 | Cable distribucion 12FO 200 m. Un extremo preconectorizado MPO | 1 |
