@@ -49,9 +49,7 @@ Vano A-B = **50 metros**
 Pasan **4 cables**  
 
 Consumo:  
-$$
-50 \ \text{m} \times 0.014 \ \frac{\text{kg}}{\text{m}} = 0.7 \ \text{kg}
-$$
+50m * 0.014kg/m = 0.7kg
 
 ---
 
