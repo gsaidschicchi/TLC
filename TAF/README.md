@@ -8,30 +8,10 @@ El técnico seleccionará el apoyo en el que se encuentra y completará la infor
 
 ---
 
-## Premisa
+## Manejo de secuenciales de FO de distribución
 
-> *"No son necesarios todos los secuenciales de los cables preconectorizados a no ser que sobrepase la longitud de cable indicada en diseño"*
-
----
-
-## Comportamiento propuesto 1 (pendiente de consensuar)
-
-El formulario NAS presenta el cable indicado por diseño como **preseleccionado** para la tarea a completar.  
-
-**Ejemplo:** instalación de caja `N01-H01` → cable **MPO** de 100 metros.  
-
-Si el técnico identifica que la longitud de cable propuesta **no es suficiente** (por ejemplo, coloca un cable de 150 metros), lo registrará en el formulario.  
-En este caso, el sistema solicitará también completar el **secuencial de inicio y fin**.
-
-Inconveniente: El técnico que completa esta información no es el mismo que tendió el cable. El administrativo de la contratista debe enviar la información al técnico de medición previo a completar el form.
-
----
-
-## Comportamiento propuesto 2 (pendiente de consensuar)
-
-Se presentará la totalidad de los cables dentro del formulario TAF. El técnico deberá indicar cual/es sufrieron modificaciones e incluir los secuenciales de inicio y fin para solo esos casos.  
-
-Inconveniente: La info la completa el técnico de forma manual en la calle. Se presentan la totalidad de cables del proyecto y tiene que identificar desde el celular cuales sufrieron modificaciones. Puede haber errores.
+Para no perjudicar la operatividad de la cuadrilla al completar el form, se incorporará la planilla de secuenciales durante la etapa de supervisión de obras de la tarea TAF del proyecto.  
+En caso de que no se agregue en esta instancia, se podrá agregar posteriormente editando la tarea en Viena.
 
 ---
 
@@ -50,6 +30,8 @@ Pasan **4 cables**
 
 Consumo:  
 50m * 0.014kg/m = 0.7kg
+
+*Nota:* ver **precintos** y **separadores de linga**.
 
 ---
 
