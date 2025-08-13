@@ -1,41 +1,76 @@
-# Tendido de Fibra Óptica de Acceso (TAF)
+# Modificación de Tipificación TAF
 
-## 2.1. Detalle constructivo
+En lugar de trabajar con los elementos **cable** y generar múltiples tareas (una por cada caja H y S del proyecto), se trabajará con una **única TAF** que generará un contenedor con los cables del proyecto.  
 
-### Imagen 1: TAF (tendido de fibra por poste pasado)
+Para evitar replicar las fotos solicitadas por los elementos *apoyo* que pueden compartir múltiples cables —lo que incrementa la carga operativa para la EC—, en la tarea se presentará **la totalidad de los apoyos** por los que pasan cables **FC** y **MPO**.
 
-![Fibra óptica pasada por apoyo](./imagen1.PNG)
-
-**Descripción:**  
-La fibra óptica se sujeta al poste mediante un **morseto de 1 bulón**, permitiendo su continuidad sin corte en los apoyos intermedios.
+El técnico seleccionará el apoyo en el que se encuentra y completará la información correspondiente en el formulario TAF.
 
 ---
 
-### Imagen 2: Cruce de calle
+## Premisa
 
-![Cruce de calle con fibra óptica](./imagen2.png)
-
-**Descripción:**  
-La fibra óptica realiza un cruce de calle utilizando **morsetos de 1 bulón** y **alambre de devanar** para asegurar el tendido y garantizar la tensión adecuada.
+> *"No son necesarios todos los secuenciales de los cables preconectorizados a no ser que sobrepase la longitud de cable indicada en diseño"*
 
 ---
 
-## 3. Consumo de materiales
+## Comportamiento propuesto 1 (pendiente de consensuar)
 
-### Tabla 1: TAF (pasada por apoyo)
+El formulario NAS presenta el cable indicado por diseño como **preseleccionado** para la tarea a completar.  
 
-| Código  | Descripción           | Unidad | Cantidad |
-|---------|------------------------|--------|----------|
-| 031034  | Morseto de 1 bulón     | u      | 2        |
+**Ejemplo:** instalación de caja `N01-H01` → cable **MPO** de 100 metros.  
 
----
+Si el técnico identifica que la longitud de cable propuesta **no es suficiente** (por ejemplo, coloca un cable de 150 metros), lo registrará en el formulario.  
+En este caso, el sistema solicitará también completar el **secuencial de inicio y fin**.
 
-### Tabla 2: Cruce de calle
-
-| Código  | Descripción           | Unidad | Cantidad |
-|---------|------------------------|--------|----------|
-| 031034  | Morseto de 1 bulón     | u      | 2        |
+Inconveniente: El técnico que completa esta información no es el mismo que tendió el cable. El administrativo de la contratista debe enviar la información al técnico de medición previo a completar el form.
 
 ---
 
-**Nota:** Las cantidades indicadas corresponden a la instalación típica para cada uno de los casos mostrados. Por cada unidad de apoyo o cruce que llegue indicado desde GIS, deberá contabilizarse lo indicado en la tabla. Finalmente se realizara el "p x q + p' x q'" para obtener los materiales totales en la tarea, siendo p: la cantidad de apoyos, q: la cantidad de materiales indicados en la tabla 1, p': la cantidad de cruces de calle, q': la cantidad de materiales indicados en la tabla 2.  
+## Comportamiento propuesto 2 (pendiente de consensuar)
+
+Se presentará la totalidad de los cables dentro del formulario TAF. El técnico deberá indicar cual/es sufrieron modificaciones e incluir los secuenciales de inicio y fin para solo esos casos.  
+
+Inconveniente: La info la completa el técnico de forma manual en la calle. Se presentan la totalidad de cables del proyecto y tiene que identificar desde el celular cuales sufrieron modificaciones. Puede haber errores.
+
+---
+
+## Consumo de materiales
+
+En función de si un cable es **pasante** o **terminal** en un apoyo, se presentará el consumo de materiales correspondiente:
+
+- 1 morseto de 1 bulón → cable pasante  
+- 2 morsetos de 1 bulón → cable terminal  
+
+El **alambre de devanar** se calculará en función de la longitud parcial entre apoyos que compartan uno o más cables.
+
+**Ejemplo:**
+Vano A-B = **50 metros**  
+Pasan **4 cables**  
+
+Consumo:  
+$$
+50 \ \text{m} \times 0.014 \ \frac{\text{kg}}{\text{m}} = 0.7 \ \text{kg}
+$$
+
+---
+
+## Pregunta clave
+
+> **¿Qué sucede si el técnico no puede completar la totalidad de apoyos del formulario al finalizar la jornada laboral?**
+
+---
+
+## Posibles alternativas
+
+### 1. Guardado parcial
+Permitir que el técnico guarde el formulario con los apoyos ya completados y lo retome más tarde.
+
+### 2. División automática
+Si quedan apoyos pendientes, generar automáticamente una nueva tarea con los restantes.
+
+### 3. Bloqueo de cierre
+No permitir cerrar la tarea hasta que todos los apoyos estén cargados.
+
+### 4. SubProceso para suspensión de tareas desde el área de despacho o técnico de calle
+
