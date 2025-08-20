@@ -10,28 +10,24 @@ El técnico seleccionará el apoyo en el que se encuentra y completará la infor
 
 ## Manejo de secuenciales de FO de distribución
 
-Para no perjudicar la operatividad de la cuadrilla al completar el form, se incorporará la planilla de secuenciales durante la etapa de supervisión de obras de la tarea TAF del proyecto.  
-En caso de que no se agregue en esta instancia, se podrá agregar posteriormente editando la tarea en Viena.
+Para no perjudicar la operatividad de la cuadrilla al completar el form sucederá una de las siguientes opciones:  
+a. El técnico de la cuadrilla podrá agregar la planilla de secuenciales al completar la tarea (.xls o .pdf).    
+b. En caso de que el técnico no lo haya realizado, se incorporará la planilla de secuenciales durante la etapa de supervisión de obras de la tarea TAF del proyecto.    
+c. En caso de que no se agregue en esta instancia, se podrá agregar posteriormente editando la tarea en Viena.  
 
 ---
 
 ## Consumo de materiales
 
-En función de si un cable es **pasante** o **terminal** en un apoyo, se presentará el consumo de materiales correspondiente:
+Se presentará la tabla con los **materiales** vacíos y el técnico podrá editar los valores de los mismos.  
 
-- 1 morseto de 1 bulón → cable pasante  
-- 2 morsetos de 1 bulón → cable terminal  
+*Ejemplo:*  
 
-El **alambre de devanar** se calculará en función de la longitud parcial entre apoyos que compartan uno o más cables.
-
-**Ejemplo:**
-Vano A-B = **50 metros**  
-Pasan **4 cables**  
-
-Consumo:  
-50m * 0.014kg/m = 0.7kg
-
-*Nota:* ver **precintos** y **separadores de linga**.
+| Código | Descripción         | Unidad | Cantidad        |
+|--------|---------------------|--------|-----------------|
+| xxxx   | Alambre de devanar  | kg     | **editable**          |
+| yyyy   | Morseto 1 bulón  | u      | **editable**    |
+| zzzz   | Precintos        | u     | **editable** |
 
 ---
 
