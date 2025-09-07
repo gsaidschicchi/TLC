@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario ICA - Intervención de Caja Activa</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      padding: 20px; 
+      max-width: 800px; 
+      margin: 0 auto; 
+    }
+    .paso { 
+      display: none; 
+      padding: 20px; 
+      border: 1px solid #ddd; 
+      border-radius: 5px; 
+      background: #f9f9f9; 
+      margin-bottom: 20px;
+    }
+    .paso.activo { 
+      display: block; 
+      animation: fade 0.3s ease-in; 
+    }
+    @keyframes fade { 
+      from { opacity: 0; } 
+      to { opacity: 1; } 
+    }
+    .botonera { 
+      margin-top: 20px; 
+      display: flex; 
+      justify-content: space-between; 
+    }
+    button { 
+      padding: 10px 15px; 
+      margin: 5px; 
+      cursor: pointer; 
+      border: none; 
+      background: #007bff; 
+      color: white; 
+      border-radius: 4px; 
+      font-size: 16px;
+    }
+    button:hover { 
+      background-color: #0056b3; 
+    }
+    button:disabled { 
+      background-color: #cccccc; 
+      cursor: not-allowed; 
+    }
+    .hidden { 
+      display: none; 
+    }
+    h3, h4, h5 { 
+      margin-top: 0; 
+      color: #333;
+    }
+    .seccion { 
+      border: 1px solid #ccc; 
+      padding: 15px; 
+      border-radius: 5px; 
+      margin-bottom: 15px;
+      background: white;
+    }
+    .progress-bar {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      position: relative;
+      color: #666;
+    }
+    .progress-step.active {
+      color: #007bff;
+      font-weight: bold;
+    }
+    .progress-step.completed {
+      color: #28a745;
+    }
+    .progress-step:not(:last-child):after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      background: #ddd;
+      z-index: -1;
+    }
+    .progress-step.completed:not(:last-child):after {
+      background: #28a745;
+    }
+    .error { 
+      color: #dc3545; 
+      font-size: 14px; 
+      margin-top: 5px;
+    }
+    .preview-img {
+      max-width: 200px;
+      max-height: 150px;
+      margin: 5px;
+      display: inline-block;
+      position: relative;
+    }
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .preview-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .remove-btn {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      font-size: 14px;
+      line-height: 18px;
+      text-align: center;
+      padding: 0;
+    }
+    #resumen p {
+      margin: 5px 0;
+      padding: 5px;
+      background: #f0f0f0;
+      border-radius: 3px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    input[type="number"] {
+      width: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Formulario ICA - Intervención de Caja Activa</h2>
+
+<div class="progress-bar">
+  <div class="progress-step active" id="step-1">1. Ubicación</div>
+  <div class="progress-step" id="step-2">2. Instalación</div>
+  <div class="progress-step" id="step-3">3. Materiales</div>
+  <div class="progress-step" id="step-4">4. Resumen</div>
+</div>
+
+<!-- PASO 1 -->
+<div class="paso activo" id="paso-1">
+  <h3>Paso 1: Activar ubicación</h3>
+  <div class="seccion">
+    <p><strong>Debe posicionar la caja en el apoyo de red al momento de escanear el QR</strong></p>
+    <button onclick="getUbicacion()">Activar ubicación</button>
+    <p id="ubicacion">Ubicación: no disponible</p>
+    <p id="error-ubicacion" class="error hidden">Debe activar la ubicación para continuar</p>
+  </div>
+  <div class="botonera">
+    <button disabled>Anterior</button>
+    <button onclick="validarPaso1()">Siguiente</button>
+  </div>
+</div>
+
+<!-- PASO 2 -->
+<div class="paso" id="paso-2">
+  <h3>Paso 2: Instalación y medición de cajas</h3>
+
+  <div class="seccion">
+    <p style="background:#fff3cd; padding:10px; border-radius:5px; border:1px solid #ffeeba;">
+      <strong>Recuerde notificar a la supervisión de obras si hubiera un inconveniente</strong>
+    </p>
+  </div>
+
+  <div class="seccion" id="seccion-ingresoFO">
+    <label><strong>Adjuntar fotos de ingreso de FO</strong></label><br>
+    <input type="file" multiple accept="image/*" onchange="handleMultipleFiles(this, 'ingresoFO')">
+    <div class="preview-container" id="previewIngresoFO"></div>
+    <label>Comentarios opcionales:</label><br>
+    <textarea rows="2" cols="50" onchange="formData.comentarios.ingresoFO=this.value"></textarea>
+  </div>
+
+  <div class="seccion" id="seccion-armadoBandejas">
+    <label><strong>Adjuntar fotos del armado de bandejas</strong></label><br>
+    <input type="file" multiple accept="image/*" onchange="handleMultipleFiles(this, 'armadoBandejas')">
+    <div class="preview-container" id="previewArmadoBandejas"></div>
+    <label>Comentarios opcionales:</label><br>
+    <textarea rows="2" cols="50" onchange="formData.comentarios.armadoBandejas=this.value"></textarea>
+  </div>
+
+  <div class="seccion" id="seccion-cierreCaja">
+    <label><strong>Adjuntar fotos del cierre de caja de empalme</strong></label><br>
+    <input type="file" multiple accept="image/*" onchange="handleMultipleFiles(this, 'cierreCaja')">
+    <div class="preview-container" id="previewCierreCaja"></div>
+    <label>Comentarios opcionales:</label><br>
+    <textarea rows="2" cols="50" onchange="formData.comentarios.cierreCaja=this.value"></textarea>
+  </div>
+
+  <div class="seccion" id="seccion-montajeApoyo">
+    <label><strong>Adjuntar fotos de montaje de caja en apoyo</strong></label><br>
+    <input type="file" multiple accept="image/*" onchange="handleMultipleFiles(this, 'montajeApoyo')">
+    <div class="preview-container" id="previewMontajeApoyo"></div>
+    <label>Comentarios opcionales:</label><br>
+    <textarea rows="2" cols="50" onchange="formData.comentarios.montajeApoyo=this.value"></textarea>
+  </div>
+
+  <div class="botonera">
+    <button onclick="anteriorPaso()">Anterior</button>
+    <button onclick="validarPaso2()">Siguiente</button>
+  </div>
+</div>
+
+<!-- PASO 3 -->
+<div class="paso" id="paso-3">
+  <h3>Paso 3: Materiales</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Unidad</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody id="tablaMateriales">
+      <tr>
+        <td>Termocontraíble</td>
+        <td>u</td>
+        <td><input type="number" min="0" onchange="formData.materiales[0].cantidad=this.value"></td>
+      </tr>
+      <tr>
+        <td>Precintos</td>
+        <td>u</td>
+        <td><input type="number" min="0" onchange="formData.materiales[1].cantidad=this.value"></td>
+      </tr>
+      <tr>
+        <td>Manguitos de empalme</td>
+        <td>u</td>
+        <td><input type="number" min="0" onchange="formData.materiales[2].cantidad=this.value"></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="botonera">
+    <button onclick="getUbicacion()">Activar ubicación</button>
+    <button onclick="siguientePaso()">Continuar sin ubicación</button>
+    <p id="ubicacion">Ubicación: no disponible</p>
+  </div>
+</div>
+
+<!-- PASO 4 -->
+<div class="paso" id="paso-4">
+  <h3>Paso 4: Resumen y envío</h3>
+  <div class="seccion">
+    <h4>Resumen de fotos y comentarios</h4>
+    <div id="resumen"></div>
+  </div>
+  <div class="seccion">
+    <h4>Resumen de materiales</h4>
+    <div id="resumenMateriales"></div>
+  </div>
+  <div class="botonera">
+    <button onclick="anteriorPaso()">Anterior</button>
+    <button onclick="enviarFormulario()" style="background-color: #28a745;">Enviar formulario</button>
+  </div>
+</div>
+
+<script>
+// Variables globales
+let pasoActual = 1;
+let formData = {
+  ubicacion: null,
+  fotos: {
+    ingresoFO: [],
+    armadoBandejas: [],
+    cierreCaja: [],
+    montajeApoyo: []
+  },
+  comentarios: {
+    ingresoFO: "",
+    armadoBandejas: "",
+    cierreCaja: "",
+    montajeApoyo: ""
+  },
+  materiales: [
+    { descripcion: "Termocontraíble", unidad: "u", cantidad: "" },
+    { descripcion: "Precintos", unidad: "u", cantidad: "" },
+    { descripcion: "Manguitos de empalme", unidad: "u", cantidad: "" }
+  ]
+};
+
+// Mostrar y navegar pasos
+function mostrarPaso(n) {
+  document.querySelectorAll('.progress-step').forEach((step, i) => {
+    step.classList.remove('active', 'completed');
+    if (i+1 === n) step.classList.add('active');
+    else if (i+1 < n) step.classList.add('completed');
+  });
+  document.querySelectorAll('.paso').forEach((div, i) => div.classList.toggle('activo', i===n-1));
+  pasoActual = n;
+
+  if (pasoActual===4) generarResumen();
+}
+
+function siguientePaso(){ if(pasoActual<4) mostrarPaso(pasoActual+1); }
+function anteriorPaso(){ if(pasoActual>1) mostrarPaso(pasoActual-1); }
+
+// Validaciones
+function validarPaso1(){
+  // ya no hace check obligatorio
+  siguientePaso();
+}
+
+function validarPaso2(){
+  let valid = true;
+  ["ingresoFO","armadoBandejas","cierreCaja","montajeApoyo"].forEach(k=>{
+    if(formData.fotos[k].length===0){ alert("Debe adjuntar al menos una foto en "+k); valid=false; }
+  });
+  if(valid) siguientePaso();
+}
+
+// Ubicación
+function getUbicacion(){
+  if(!navigator.geolocation){
+    alert("Tu navegador no soporta geolocalización.");
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude.toFixed(5),
+            lon = pos.coords.longitude.toFixed(5);
+      formData.ubicacion = { lat, lon };
+      document.getElementById("ubicacion").innerText = `Ubicación: Lat ${lat}, Lon ${lon}`;
+    },
+    err => {
+      alert("No se pudo obtener la ubicación. Por favor, permitir geolocalización o continuar manualmente.");
+      formData.ubicacion = null;
+      document.getElementById("ubicacion").innerText = "Ubicación: no disponible";
+    }
+  );
+}
+
+// Manejo de múltiples archivos
+function handleMultipleFiles(input, key){
+  const files = Array.from(input.files);
+  formData.fotos[key] = files;
+
+  const previewContainer = document.getElementById("preview"+capitalize(key));
+  previewContainer.innerHTML = "";
+  files.forEach((file, idx)=>{
+    const reader = new FileReader();
+    reader.onload = e=>{
+      const wrapper = document.createElement("div");
+      wrapper.className = "preview-wrapper";
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.className = "preview-img";
+      const removeBtn = document.createElement("button");
+      removeBtn.innerText = "×";
+      removeBtn.className = "remove-btn";
+      removeBtn.onclick = ()=>{ wrapper.remove(); formData.fotos[key].splice(idx,1); };
+      wrapper.appendChild(img);
+      wrapper.appendChild(removeBtn);
+      previewContainer.appendChild(wrapper);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function capitalize(str){ return str.charAt(0).toUpperCase() + str.slice(1); }
+
+// Generar resumen
+function generarResumen(){
+  const resumen = document.getElementById('resumen');
+  resumen.innerHTML="";
+  for(const key in formData.fotos){
+    if(formData.fotos[key].length>0){
+      resumen.innerHTML+=`<p><strong>${key}:</strong> ${formData.comentarios[key] || ''}</p>`;
+      formData.fotos[key].forEach(file=>{
+        const reader=new FileReader();
+        reader.onload=e=>{
+          resumen.innerHTML+=`<img src="${e.target.result}" class="preview-img">`;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+
+  const resumenMat = document.getElementById("resumenMateriales");
+  let html="<table><thead><tr><th>Descripción</th><th>Unidad</th><th>Cantidad</th></tr></thead><tbody>";
+  formData.materiales.forEach(m=>{
+    html+=`<tr><td>${m.descripcion}</td><td>${m.unidad}</td><td>${m.cantidad}</td></tr>`;
+  });
+  html+="</tbody></table>";
+  resumenMat.innerHTML = html;
+}
+
+// Enviar formulario
+function enviarFormulario(){
+  console.log("Datos a enviar:", formData);
+  alert("Formulario enviado correctamente. Gracias por completar la instalación.");
+  setTimeout(()=>{ location.reload(); },2000);
+}
+</script>
+
+</body>
+</html>
