@@ -2,6 +2,8 @@
 
 Este documento describe el flujo de trabajo para la **intervención de una caja activa en un escenario Brownfield**, desde la detección hasta el cierre de tareas.  
 
+![Flujo](proceso.PNG)
+
 ---
 
 ## 🔄 Flujo del Proceso  
