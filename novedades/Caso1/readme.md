@@ -61,6 +61,7 @@ Se identifican dos casos que requerirán flujos de trabajo diferentes.
 7. Se notifica esta novedad a diseño para actualizar el plano de Obras.  
 7. El proceso finaliza con la novedad registrada, GIS actualizado, tarea con materiales preconsumidos, tarea identificada para ser pagable (*si correspondiese*).  
 
+![diagrama](DCU.PNG)
 ---
 
 ## Flujos Alternativos / Excepciones
