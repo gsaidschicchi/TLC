@@ -82,5 +82,8 @@ Se identifican dos casos que requerirán flujos de trabajo diferentes.
 
 ## Preguntas
 - ¿Va a haber relación entre la identificación de la tarea, la apertura de la misma en Moica Publico y el sistema Eta?  
-*El circuito actual contempla la creación de la tarea en Viena, posterior enrutamiento en Eta, apertura y completitud de la misma en MP. Definir el circuito de identificación y creación de la tarea para ver si es necesario o no involucrar a Eta.*  
+*El circuito actual contempla la creación de la tarea en Viena, posterior enrutamiento en Eta, apertura y completitud de la misma en MP. Definir el circuito de identificación y creación de la tarea para ver si es necesario o no involucrar a Eta.*
+- ¿Que sucede si necesito identificar mas de un elemento en una misma tarea a ejecutar?
+*Ejemplo: una extensión de red en la cual hay que colocar un apoyo o dos adicional y su correspondiente linga.*
+¿Se trabaja cada elemento como si fuera independiente? ¿Se solicita el rediseño de plano y se aguarda? ¿Es posible generar una **tarea** que involucre un conjunto de subtareas y se declare todo junto?  
 
