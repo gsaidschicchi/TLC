@@ -86,9 +86,12 @@ Se identifican dos casos que requerirán flujos de trabajo diferentes.
 - ¿Que sucede si necesito identificar mas de un elemento en una misma tarea a ejecutar?
 *Ejemplo: una extensión de red en la cual hay que colocar un apoyo o dos adicional y su correspondiente linga.*
 ¿Se trabaja cada elemento como si fuera independiente? ¿Se solicita el rediseño de plano y se aguarda? ¿Es posible generar una **tarea** que involucre un conjunto de subtareas y se declare todo junto?  
-- ¿Vamos asociar la nueva tarea a ejecutar a una tarea existente? ¿O es una tarrea nueva no vinculada a nada?
-- ¿Cómo ven la reporteria de la tarea a ejecutar el supervisor de obra en caso que haya que validarlo?
-*Nota: el circuito de aprobación no debe condicionar el despliegue en calle.*
+- ¿Vamos asociar la nueva tarea a ejecutar a una tarea existente? ¿O es una tarrea nueva no vinculada a nada? ¿Cómo se generaría la tarea Viena para poder asociar a MP?
+- ¿Cómo se notifica al supervisor de obras de la tarea indicada por la EC como 'a validar' para iniciar la ejecución?  
+*Nota: el circuito de aprobación no debe condicionar el despliegue en calle (debe ser ágil).*
+- ¿Como se preconsumirán los materiales? Al tratarse de tareas 'no contempladas', puede suceder que el consumo de materiales no sea estandar. Se puede presentar un listado de materiales acotado en función de una tipificación seleccionada, y que el técnico ingrese manualmente las cantidades. Finalmente se preconsumirán solo los materiales que sean distintos del valor de default, cero.
+
+  
 
 
  
